@@ -29,5 +29,11 @@ namespace ClientApi.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("GetMills")]
+        public long GetMillis()
+        {
+            return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        }
     }
 }
