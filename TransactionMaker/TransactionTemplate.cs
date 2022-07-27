@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -18,16 +19,25 @@ namespace TransactionMaker
         {
             Params = new Dictionary<string, string>();
             Method = string.Empty;
+            ApiKey = string.Empty;
+            Signature = string.Empty;
             Nonce = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             Semaphore.Wait();
             Id = _id;
             _id++;
             Semaphore.Release();
         }
-
+        [JsonProperty("params")]
         public Dictionary<string, string> Params { get; set; }
+        [JsonProperty("method")]
         public string Method { get; set; }
+        [JsonProperty("id")]
         public long Id { get; set; }
+        [JsonProperty("nonce")]
         public long Nonce { get; set; }
+        [JsonProperty("api_key")]
+        public string ApiKey { get; set; }
+        [JsonProperty("sig")]
+        public string Signature { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using TransactionMaker;
 
 namespace ClientApi.Controllers
 {
@@ -6,34 +8,34 @@ namespace ClientApi.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        private readonly IConfiguration _configuration;
+        private readonly TransactionSigner.TransactionSigner _signer;
+        private readonly HttpClient _client;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IConfiguration configuration, TransactionSigner.TransactionSigner signer, HttpClient client)
         {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            _configuration = configuration;
+            _signer = signer;
+            _client = client;
         }
 
         [HttpGet("GetMills")]
         public long GetMillis()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        }
+
+        [HttpGet("GetSample")]
+        public async Task<HttpResponseMessage> GetSample()
+        {
+            var temp = new TransactionTemplate
+            {
+                Method = "private/get-currency-networks",
+                ApiKey = _configuration["ApiKey"]
+            };
+            temp.Signature = _signer.GetSign(temp);
+            var res = await _client.PostAsync(temp.Method, new StringContent(JsonConvert.SerializeObject(temp)));
+            return res;
         }
     }
 }
