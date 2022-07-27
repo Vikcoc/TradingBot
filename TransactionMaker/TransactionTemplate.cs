@@ -21,7 +21,7 @@ namespace TransactionMaker
             Method = string.Empty;
             ApiKey = string.Empty;
             Signature = string.Empty;
-            Nonce = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            Nonce = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(20)).ToUnixTimeMilliseconds();
             Semaphore.Wait();
             Id = _id;
             _id++;

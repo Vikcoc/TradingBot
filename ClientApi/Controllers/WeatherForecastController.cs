@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TransactionMaker;
@@ -26,16 +28,25 @@ namespace ClientApi.Controllers
         }
 
         [HttpGet("GetSample")]
-        public async Task<HttpResponseMessage> GetSample()
+        public async Task<string> GetSample()
         {
             var temp = new TransactionTemplate
             {
-                Method = "private/get-currency-networks",
-                ApiKey = _configuration["ApiKey"]
+                Method = "private/get-account-summary",
+                ApiKey = _configuration["ApiKey"],
+                Params = new Dictionary<string, string>
+                {
+                    //{"currency", "USDT"},
+                    {"currency", "BTC"}
+                }
             };
             temp.Signature = _signer.GetSign(temp);
-            var res = await _client.PostAsync(temp.Method, new StringContent(JsonConvert.SerializeObject(temp)));
-            return res;
+            var bod = JsonConvert.SerializeObject(temp);
+            Console.WriteLine(bod);
+            var req = new StringContent(bod);
+            req.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var res = await _client.PostAsync(temp.Method, req);
+            return await res.Content.ReadAsStringAsync();
         }
     }
 }
