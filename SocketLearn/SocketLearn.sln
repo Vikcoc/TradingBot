@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketLearn", "SocketLearn\SocketLearn.csproj", "{79C40B96-7D4E-4B08-AB1C-0219995E14F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForSocket", "ForSocket\ForSocket.csproj", "{EEA95497-899D-4B74-96FA-9588C6A2519E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79C40B96-7D4E-4B08-AB1C-0219995E14F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C40B96-7D4E-4B08-AB1C-0219995E14F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79C40B96-7D4E-4B08-AB1C-0219995E14F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79C40B96-7D4E-4B08-AB1C-0219995E14F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEA95497-899D-4B74-96FA-9588C6A2519E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEA95497-899D-4B74-96FA-9588C6A2519E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEA95497-899D-4B74-96FA-9588C6A2519E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEA95497-899D-4B74-96FA-9588C6A2519E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5888C4CB-6719-40E4-80FC-88382493A818}
+	EndGlobalSection
+EndGlobal

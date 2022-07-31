@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SocketTests;
 using TransactionMaker;
 
 namespace ClientApi.Controllers
@@ -47,6 +48,27 @@ namespace ClientApi.Controllers
             req.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var res = await _client.PostAsync(temp.Method, req);
             return await res.Content.ReadAsStringAsync();
+        }
+
+        [HttpGet("connect")]
+        public IActionResult Connect()
+        {
+            Class1.StartClient();
+            return Ok();
+        }
+
+        [HttpGet("connectCrypto")]
+        public IActionResult ConnectCrypto()
+        {
+            new TaskFactory().StartNew(Class1.StartForCrypto);
+            return Ok();
+        }
+
+        [HttpGet("disconnectCrypto")]
+        public IActionResult DisconnectCrypto()
+        {
+            Class1.StopForCrypto();
+            return Ok();
         }
     }
 }

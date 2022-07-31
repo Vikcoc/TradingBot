@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SocketTests\SocketTests.csproj" />
-    <ProjectReference Include="..\TransactionSigner\TransactionSigner.csproj" />
+    <ProjectReference Include="..\ForSocket\ForSocket.csproj" />
   </ItemGroup>
 
 </Project>
