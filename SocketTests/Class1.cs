@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using TransactionMaker;
 
 namespace SocketTests
 {
@@ -147,6 +151,48 @@ namespace SocketTests
             var mem = new Memory<byte>();
             var y = await x.ReceiveAsync(mem, CancellationToken.None);
             Console.WriteLine(Encoding.ASCII.GetString(mem.ToArray()));
+            //https://exchange-docs.crypto.com/spot/index.html?csharp#websocket-subscriptions
+            //https://docs.microsoft.com/en-us/dotnet/api/system.net.websockets.clientwebsocket?view=net-6.0
+            //todo remember you gotta use websockets to subscribe
+        }
+
+        public static async void Web2()
+        {
+            var x = new ClientWebSocket();
+            await x.ConnectAsync(new Uri("wss://stream.crypto.com/v2/market"), CancellationToken.None);
+            await Task.Delay(1000);
+
+            //var trans = new TransactionTemplate
+            //{
+            //    Method = "subscribe",
+            //    Params = new Dictionary<string, string>
+            //    {
+            //        { "channels", JsonConvert.SerializeObject(new []{ "market.order.ETH_CRO" }) }
+            //    }
+            //};
+
+            //await x.SendAsync(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(trans)), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            var trans = new Dictionary<string, object>
+            {
+                { "event", "sub" },
+                {
+                    "params", new Dictionary<string, string>
+                    {
+                        { "channel", "market_BTC_ticker" },
+                        { "cb_id", "custom" }
+                    }
+                }
+            };
+            await x.SendAsync(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(trans)), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            var mem = new Memory<byte>(new byte[1024]);
+            while (true)
+            {
+                var y = await x.ReceiveAsync(mem, CancellationToken.None);
+                Console.WriteLine(Encoding.ASCII.GetString(mem.ToArray()));
+                mem = new Memory<byte>(new byte[1024]);
+            }
             //https://exchange-docs.crypto.com/spot/index.html?csharp#websocket-subscriptions
             //https://docs.microsoft.com/en-us/dotnet/api/system.net.websockets.clientwebsocket?view=net-6.0
             //todo remember you gotta use websockets to subscribe

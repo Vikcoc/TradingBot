@@ -60,7 +60,7 @@ namespace ClientApi.Controllers
         [HttpGet("connectCrypto")]
         public IActionResult ConnectCrypto()
         {
-            new TaskFactory().StartNew(Class1.StartForCrypto);
+            Class1.Web2();
             return Ok();
         }
 
