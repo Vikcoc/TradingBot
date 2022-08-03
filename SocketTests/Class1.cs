@@ -175,7 +175,7 @@ namespace SocketTests
 
             var trans = new Dictionary<string, object>
             {
-                { "event", "sub" },
+                { "event", "subscribe" },
                 {
                     "params", new Dictionary<string, string>
                     {
@@ -196,6 +196,70 @@ namespace SocketTests
             //https://exchange-docs.crypto.com/spot/index.html?csharp#websocket-subscriptions
             //https://docs.microsoft.com/en-us/dotnet/api/system.net.websockets.clientwebsocket?view=net-6.0
             //todo remember you gotta use websockets to subscribe
+        }
+
+        public static async void Web3(string apiKey, TransactionSigner.TransactionSigner transactionSigner)
+        {
+            var x = new ClientWebSocket();
+            await x.ConnectAsync(new Uri("wss://stream.crypto.com/v2/user"), CancellationToken.None);
+            await Task.Delay(1000);
+
+            var temp = new TransactionTemplate
+            {
+                Method = "public/auth",
+                ApiKey = apiKey
+            };
+            //var temp = new TransactionTemplate
+            //{
+            //    Method = "private/get-account-summary",
+            //    ApiKey = apiKey,
+            //    Params = new Dictionary<string, string>
+            //    {
+            //        //{"currency", "USDT"},
+            //        {"currency", "BTC"}
+            //    }
+            //};
+            temp.Signature = transactionSigner.GetSign(temp);
+            var trans = JsonConvert.SerializeObject(temp);
+
+            await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            await Task.Delay(1000);
+
+            temp = new TransactionTemplate
+            {
+                Method = "subscribe",
+                ApiKey = apiKey,
+                Params = new Dictionary<string, string>
+                {
+                    {"channels", JsonConvert.SerializeObject(new []{"user.order.ETH_CRO"})}
+                }
+            };
+            temp.Signature = transactionSigner.GetSign(temp);
+            trans = JsonConvert.SerializeObject(temp);
+
+            await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            var mem = new Memory<byte>(new byte[2048]);
+            while (true)
+            {
+                var y = await x.ReceiveAsync(mem, CancellationToken.None);
+                var res = Encoding.ASCII.GetString(mem.ToArray());
+                Console.WriteLine(res);
+                var rs = JsonConvert.DeserializeObject<TransactionTemplate>(res);
+                if (rs.Method == "public/heartbeat")
+                {
+                    rs.Method = "public/respond-heartbeat";
+                    var heartbeat = JsonConvert.SerializeObject(rs);
+                    await x.SendAsync(Encoding.ASCII.GetBytes(heartbeat), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+                mem = new Memory<byte>(new byte[2048]);
+            }
+            //https://exchange-docs.crypto.com/spot/index.html?csharp#websocket-subscriptions
+            //https://docs.microsoft.com/en-us/dotnet/api/system.net.websockets.clientwebsocket?view=net-6.0
+            //todo remember you gotta use websockets to subscribe
+            //todo https://github.com/goincrypto/cryptocom-exchange
+            //explore to see how he did it
         }
     }
 }

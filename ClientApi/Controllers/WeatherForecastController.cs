@@ -60,7 +60,7 @@ namespace ClientApi.Controllers
         [HttpGet("connectCrypto")]
         public IActionResult ConnectCrypto()
         {
-            Class1.Web2();
+            Class1.Web3(_configuration["ApiKey"], _signer);
             return Ok();
         }
 
