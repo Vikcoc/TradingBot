@@ -60,7 +60,13 @@ namespace ClientApi.Controllers
         [HttpGet("connectCrypto")]
         public IActionResult ConnectCrypto()
         {
-            Class1.Web3(_configuration["ApiKey"], _signer);
+            Class1.Web5(_configuration["ApiKey"], _signer);
+            return Ok();
+        }
+        [HttpPost("connectCrypto")]
+        public IActionResult ConnectCrypto(string arg)
+        {
+            Class1.Web4(arg, _configuration["ApiKey"], _signer);
             return Ok();
         }
 
@@ -68,6 +74,13 @@ namespace ClientApi.Controllers
         public IActionResult DisconnectCrypto()
         {
             Class1.StopForCrypto();
+            return Ok();
+        }
+
+        [HttpGet("connectCryptoMarkets")]
+        public IActionResult ConnectCryptoMarkets()
+        {
+            Class1.Web6();
             return Ok();
         }
     }

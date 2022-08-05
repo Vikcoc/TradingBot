@@ -224,20 +224,20 @@ namespace SocketTests
 
             await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
 
-            await Task.Delay(1000);
+            await Task.Delay(2000);
 
             temp = new TransactionTemplate
             {
                 Method = "subscribe",
-                ApiKey = apiKey,
+                //ApiKey = apiKey,
                 Params = new Dictionary<string, string>
                 {
                     {"channels", JsonConvert.SerializeObject(new []{"user.order.ETH_CRO"})}
                 }
             };
-            temp.Signature = transactionSigner.GetSign(temp);
+            //temp.Signature = transactionSigner.GetSign(temp);
             trans = JsonConvert.SerializeObject(temp);
-
+            Console.WriteLine("Before send: " + trans);
             await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
 
             var mem = new Memory<byte>(new byte[2048]);
@@ -260,6 +260,177 @@ namespace SocketTests
             //todo remember you gotta use websockets to subscribe
             //todo https://github.com/goincrypto/cryptocom-exchange
             //explore to see how he did it
+        }
+
+
+        public static async void Web4(string arg, string apiKey, TransactionSigner.TransactionSigner transactionSigner)
+        {
+            var x = new ClientWebSocket();
+            await x.ConnectAsync(new Uri("wss://stream.crypto.com/v2/user"), CancellationToken.None);
+            await Task.Delay(1000);
+
+            var temp = new TransactionTemplate
+            {
+                Method = "public/auth",
+                ApiKey = apiKey
+            };
+
+            temp.Signature = transactionSigner.GetSign(temp);
+            var trans = JsonConvert.SerializeObject(temp);
+
+            await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            _live = true;
+            var firstTime = true;
+
+            var mem = new Memory<byte>(new byte[2048]);
+            while (_live)
+            {
+                var y = await x.ReceiveAsync(mem, CancellationToken.None);
+                var res = Encoding.ASCII.GetString(mem.ToArray());
+                Console.WriteLine(res);
+                var rs = JsonConvert.DeserializeObject<TransactionTemplateLite>(res);
+                mem = new Memory<byte>(new byte[2048]);
+
+                if (rs.Method == "public/heartbeat")
+                {
+                    rs.Method = "public/respond-heartbeat";
+                    rs.Nonce = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(20)).ToUnixTimeMilliseconds();
+                    var heartbeat = JsonConvert.SerializeObject(rs);
+                    Console.WriteLine("Before send: " + heartbeat);
+                    await x.SendAsync(Encoding.ASCII.GetBytes(heartbeat), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+
+                if (firstTime)
+                {
+                    firstTime = false;
+                    var lite = new TransactionTemplateLite
+                    {
+                        Method = "subscribe",
+                        Params = new Dictionary<string, string>
+                        {
+                            {"channels", JsonConvert.SerializeObject(new []{"user.order.ETH_CRO"})}
+                        }
+                    };
+                    //temp.Signature = transactionSigner.GetSign(temp);
+                    //trans = JsonConvert.SerializeObject(lite).Replace("\\","");
+                    trans = arg.Replace("1587523073344", DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(20)).ToUnixTimeMilliseconds().ToString());
+                    Console.WriteLine("Before send: " + trans);
+                    await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+            }
+
+            await x.CloseAsync(WebSocketCloseStatus.NormalClosure, WebSocketCloseStatus.NormalClosure.ToString(),
+                CancellationToken.None);
+        }
+
+        public static async void Web5(string apiKey, TransactionSigner.TransactionSigner transactionSigner)
+        {
+            var x = new ClientWebSocket();
+            await x.ConnectAsync(new Uri("wss://stream.crypto.com/v2/user"), CancellationToken.None);
+            await Task.Delay(1000);
+
+            var temp = new TransactionTemplate
+            {
+                Method = "public/auth",
+                ApiKey = apiKey
+            };
+
+            temp.Signature = transactionSigner.GetSign(temp);
+            var trans = JsonConvert.SerializeObject(temp);
+
+            await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            _live = true;
+            var firstTime = true;
+
+            var mem = new Memory<byte>(new byte[2048]);
+            while (_live)
+            {
+                var y = await x.ReceiveAsync(mem, CancellationToken.None);
+                var res = Encoding.ASCII.GetString(mem.ToArray());
+                Console.WriteLine(res);
+                var rs = JsonConvert.DeserializeObject<TransactionTemplateLite>(res);
+                mem = new Memory<byte>(new byte[2048]);
+
+                if (rs.Method == "public/heartbeat")
+                {
+                    rs.Method = "public/respond-heartbeat";
+                    rs.Nonce = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(20)).ToUnixTimeMilliseconds();
+                    var heartbeat = JsonConvert.SerializeObject(rs);
+                    Console.WriteLine("Before send: " + heartbeat);
+                    await x.SendAsync(Encoding.ASCII.GetBytes(heartbeat), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+
+                if (firstTime)
+                {
+                    firstTime = false;
+                    var lite = new TransactionTemplateLite
+                    {
+                        Method = "subscribe",
+                        Params = new Dictionary<string, string>
+                        {
+                            {"channels", JsonConvert.SerializeObject(new []{"user.order.ETH_CRO"})}
+                        }
+                    };
+                    //temp.Signature = transactionSigner.GetSign(temp);
+                    trans = JsonConvert.SerializeObject(lite).Replace("\\", "").Replace("\"[","[").Replace("]\"", "]");
+                    Console.WriteLine("Before send: " + trans);
+                    await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+            }
+
+            await x.CloseAsync(WebSocketCloseStatus.NormalClosure, WebSocketCloseStatus.NormalClosure.ToString(),
+                CancellationToken.None);
+        }
+
+        public static async void Web6()
+        {
+            var x = new ClientWebSocket();
+            await x.ConnectAsync(new Uri("wss://stream.crypto.com/v2/market"), CancellationToken.None);
+            await Task.Delay(1000);
+
+            _live = true;
+            var firstTime = true;
+
+            var mem = new Memory<byte>(new byte[2048]);
+            while (_live)
+            {
+                var y = await x.ReceiveAsync(mem, CancellationToken.None);
+                var res = Encoding.ASCII.GetString(mem.ToArray());
+                Console.WriteLine(res);
+                var rs = JsonConvert.DeserializeObject<TransactionTemplateLite>(res);
+                mem = new Memory<byte>(new byte[2048]);
+
+                if (rs.Method == "public/heartbeat")
+                {
+                    rs.Method = "public/respond-heartbeat";
+                    rs.Nonce = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(20)).ToUnixTimeMilliseconds();
+                    var heartbeat = rs.ToString();
+                    Console.WriteLine("Before send: " + heartbeat);
+                    await x.SendAsync(Encoding.ASCII.GetBytes(heartbeat), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+
+                if (firstTime)
+                {
+                    firstTime = false;
+                    var lite = new TransactionTemplateLite
+                    {
+                        Method = "subscribe",
+                        Params = new Dictionary<string, string>
+                        {
+                            {"channels", JsonConvert.SerializeObject(new []{"ticker.ETH_CRO"})}
+                        }
+                    };
+                    //temp.Signature = transactionSigner.GetSign(temp);
+                    var trans = lite.ToString();
+                    Console.WriteLine("Before send: " + trans);
+                    await x.SendAsync(Encoding.ASCII.GetBytes(trans), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+            }
+
+            await x.CloseAsync(WebSocketCloseStatus.NormalClosure, WebSocketCloseStatus.NormalClosure.ToString(),
+                CancellationToken.None);
         }
     }
 }
