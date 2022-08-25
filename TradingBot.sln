@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionSigner", "Transa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionMaker", "TransactionMaker\TransactionMaker.csproj", "{03126F6F-9B3C-48EF-A1E5-ED2E8EB5902D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketTests", "SocketTests\SocketTests.csproj", "{F1AAE467-7141-4153-BB68-4ED254F90A99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketTests", "SocketTests\SocketTests.csproj", "{F1AAE467-7141-4153-BB68-4ED254F90A99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketFlow", "WebSocketFlow\WebSocketFlow.csproj", "{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F1AAE467-7141-4153-BB68-4ED254F90A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1AAE467-7141-4153-BB68-4ED254F90A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1AAE467-7141-4153-BB68-4ED254F90A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

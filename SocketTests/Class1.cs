@@ -419,7 +419,7 @@ namespace SocketTests
                         Method = "subscribe",
                         Params = new Dictionary<string, string>
                         {
-                            {"channels", JsonConvert.SerializeObject(new []{"ticker.ETH_CRO"})}
+                            {"channels", JsonConvert.SerializeObject(new []{"ticker.BTC_USDT"})}
                         }
                     };
                     //temp.Signature = transactionSigner.GetSign(temp);

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SocketTests\SocketTests.csproj" />
     <ProjectReference Include="..\TransactionSigner\TransactionSigner.csproj" />
+    <ProjectReference Include="..\WebSocketFlow\WebSocketFlow.csproj" />
   </ItemGroup>
 
 </Project>
