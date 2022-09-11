@@ -14,7 +14,7 @@ namespace WebSocketFlow.SocketAdapter
         {
             _clientWebSocket = new ClientWebSocket();
         }
-        public async Task Connect(string path = "wss://stream.crypto.com/v2/user")
+        public async Task Connect(string path)
         {
             if (IsConnected)
                 throw new NotImplementedException();
@@ -42,9 +42,10 @@ namespace WebSocketFlow.SocketAdapter
                     receiveResult = await _clientWebSocket.ReceiveAsync(buffer, CancellationToken.None);
                 }
 
-                await objectStream.WriteAsync(buffer.Array, 0, receiveResult.Count);
+                await objectStream.WriteAsync(buffer.Array!, 0, receiveResult.Count);
                 objectStream.Seek(0, SeekOrigin.Begin);
                 var responseString = await streamReader.ReadToEndAsync();
+                Console.WriteLine(responseString);
                 if (!string.IsNullOrWhiteSpace(responseString) && OnReceive != null)
                     await OnReceive(responseString);
             }

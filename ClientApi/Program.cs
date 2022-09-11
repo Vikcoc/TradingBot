@@ -13,11 +13,17 @@ builder.Services.AddScoped(x =>
 {
     var srv = x.GetService<IConfiguration>();
     Debug.Assert(srv != null, nameof(srv) + " != null");
-    return new TransactionSigner.TransactionSigner(srv["ApiKey"], srv["SecretKey"]);
+    var apiKey = srv["ApiKey"];
+    var secretKey = srv["SecretKey"];
+    if (apiKey == null || secretKey == null)
+        throw new NullReferenceException("Incomplete credentials");
+    return new TransactionSigner.TransactionSigner(apiKey, secretKey);
 });
 builder.Services.AddScoped(x =>
 {
-    var http = new HttpClient();
+    var http = x.GetService<HttpClient>();
+    if (http == null)
+        throw new NullReferenceException($"No {nameof(HttpClient)} service registered");
     http.BaseAddress = new Uri("https://api.crypto.com/v2/");
     return http;
 });

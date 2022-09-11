@@ -11,11 +11,14 @@ namespace ClientApi.Controllers
     [ApiController]
     public class SocketController : ControllerBase
     {
+        private readonly MarketAdapter _adapter= new MarketAdapter(new SocketAdapter());
+
+
         [HttpGet]
         public async Task<IActionResult> Debug()
         {
             var x = new SocketAdapter();
-            await x.Connect();
+            await x.Connect("wss://stream.crypto.com/v2/user");
             await Task.Delay(1000);
             x.OnReceive += async a =>
             {
@@ -28,6 +31,20 @@ namespace ClientApi.Controllers
                 }
             };
             await x.StartListening();
+            return Ok();
+        }
+
+        [HttpGet("StartListening")]
+        public async Task<IActionResult>Debug2()
+        {
+            await _adapter.ConnectAndListen();
+            return Ok();
+        }
+
+        [HttpGet("StopListening")]
+        public async Task<IActionResult> Debug3()
+        {
+            await _adapter.Disconnect();
             return Ok();
         }
     }
