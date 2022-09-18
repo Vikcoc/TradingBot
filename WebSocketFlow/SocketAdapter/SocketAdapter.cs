@@ -45,7 +45,7 @@ namespace WebSocketFlow.SocketAdapter
                 await objectStream.WriteAsync(buffer.Array!, 0, receiveResult.Count);
                 objectStream.Seek(0, SeekOrigin.Begin);
                 var responseString = await streamReader.ReadToEndAsync();
-                Console.WriteLine(responseString);
+                Console.WriteLine("Received: " + responseString);
                 if (!string.IsNullOrWhiteSpace(responseString) && OnReceive != null)
                     await OnReceive(responseString);
             }
@@ -55,6 +55,7 @@ namespace WebSocketFlow.SocketAdapter
         public event Func<string, Task>? OnReceive;
         public async Task Send(string dto)
         {
+            Console.WriteLine("Send: " + dto);
             await _clientWebSocket.SendAsync(Encoding.ASCII.GetBytes(dto), WebSocketMessageType.Text, true,
                 CancellationToken.None);
         }

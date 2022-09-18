@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using WebSocketFlow.SocketAdapter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,23 +10,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped(x =>
+//my socket
+builder.Services.AddTransient<ISocketAdapter, SocketAdapter>();
+builder.Services.AddSingleton<IMarketAdapter, MarketAdapter>();
+builder.Services.AddSingleton<IUserAdapter, UserAdapter>(x =>
 {
-    var srv = x.GetService<IConfiguration>();
-    Debug.Assert(srv != null, nameof(srv) + " != null");
-    var apiKey = srv["ApiKey"];
-    var secretKey = srv["SecretKey"];
-    if (apiKey == null || secretKey == null)
-        throw new NullReferenceException("Incomplete credentials");
-    return new TransactionSigner.TransactionSigner(apiKey, secretKey);
-});
-builder.Services.AddScoped(x =>
-{
-    var http = x.GetService<HttpClient>();
-    if (http == null)
-        throw new NullReferenceException($"No {nameof(HttpClient)} service registered");
-    http.BaseAddress = new Uri("https://api.crypto.com/v2/");
-    return http;
+    var configuration = x.GetService<IConfiguration>();
+    Debug.Assert(configuration != null, nameof(configuration) + " != null");
+    var apiKey = configuration["ApiKey"];
+    var secretKey = configuration["SecretKey"];
+    Debug.Assert(apiKey != null, nameof(apiKey) + " != null");
+    Debug.Assert(secretKey != null, nameof(secretKey) + " != null");
+    var socketAdapter = x.GetService<ISocketAdapter>();
+    Debug.Assert(socketAdapter != null, nameof(socketAdapter) + " != null");
+    return new UserAdapter(socketAdapter, apiKey, secretKey);
 });
 
 var app = builder.Build();

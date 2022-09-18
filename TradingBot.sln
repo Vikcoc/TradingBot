@@ -5,13 +5,7 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApi", "ClientApi\ClientApi.csproj", "{E529B33E-2618-4B0D-A1B0-AE5EB49A93D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionSigner", "TransactionSigner\TransactionSigner.csproj", "{D3C6545C-E063-4666-8218-DAB2624F688A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionMaker", "TransactionMaker\TransactionMaker.csproj", "{03126F6F-9B3C-48EF-A1E5-ED2E8EB5902D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketTests", "SocketTests\SocketTests.csproj", "{F1AAE467-7141-4153-BB68-4ED254F90A99}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketFlow", "WebSocketFlow\WebSocketFlow.csproj", "{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketFlow", "WebSocketFlow\WebSocketFlow.csproj", "{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,18 +17,6 @@ Global
 		{E529B33E-2618-4B0D-A1B0-AE5EB49A93D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E529B33E-2618-4B0D-A1B0-AE5EB49A93D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E529B33E-2618-4B0D-A1B0-AE5EB49A93D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3C6545C-E063-4666-8218-DAB2624F688A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3C6545C-E063-4666-8218-DAB2624F688A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3C6545C-E063-4666-8218-DAB2624F688A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3C6545C-E063-4666-8218-DAB2624F688A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03126F6F-9B3C-48EF-A1E5-ED2E8EB5902D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03126F6F-9B3C-48EF-A1E5-ED2E8EB5902D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03126F6F-9B3C-48EF-A1E5-ED2E8EB5902D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03126F6F-9B3C-48EF-A1E5-ED2E8EB5902D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1AAE467-7141-4153-BB68-4ED254F90A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1AAE467-7141-4153-BB68-4ED254F90A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1AAE467-7141-4153-BB68-4ED254F90A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1AAE467-7141-4153-BB68-4ED254F90A99}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7CF4675-D58C-44F9-BB1F-BFE53B3AAD59}.Release|Any CPU.ActiveCfg = Release|Any CPU

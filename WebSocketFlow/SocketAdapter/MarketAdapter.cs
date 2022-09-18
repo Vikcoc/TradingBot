@@ -1,8 +1,6 @@
-﻿using System;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography.X509Certificates;
+﻿using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using WebSocketFlow.Dto;
 using WebSocketFlow.DtoInterfaces;
 
@@ -29,10 +27,12 @@ namespace WebSocketFlow.SocketAdapter
             };
         }
 
+        protected virtual string SocketEndpoint => "wss://stream.crypto.com/v2/market";
+
         public async Task ConnectAndListen()
         {
-            await _socketAdapter.Connect("wss://stream.crypto.com/v2/market");
-            AddResponseCallback((Func<HeartbeatResponseDto, Task>)(async x => await Send(new HeartbeatRequestDto{Id = x.Id})) );
+            AddResponseCallback((Func<HeartbeatResponseDto, Task>)(async x => await Send(new HeartbeatRequestDto { Id = x.Id })));
+            await _socketAdapter.Connect(SocketEndpoint);
 #pragma warning disable CS4014
             _socketAdapter.StartListening();
 #pragma warning restore CS4014
