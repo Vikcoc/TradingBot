@@ -2,9 +2,9 @@
 using WebSocketFlow.DtoInterfaces;
 using WebSocketFlow.Extra;
 
-namespace WebSocketFlow.Dto
+namespace WebSocketFlow.Dto.Requests
 {
-    public class TickerRequestDto : IRequestDto
+    public class SubscriptionRequestDto : IRequestDto
     {
         public ICollection<string> Tickers { get; set; } = new List<string>();
         public IBaseTransactionDto ToTransactionDto()
@@ -14,7 +14,7 @@ namespace WebSocketFlow.Dto
                 Method = Methods.Subscribe,
                 Params = new Dictionary<string, object>
                 {
-                    {"channels", Tickers}   
+                    {"channels", Tickers}
                 }
             };
         }

@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
-using WebSocketFlow.Dto;
+using WebSocketFlow.Dto.Requests;
+using WebSocketFlow.Dto.Responses;
 using WebSocketFlow.DtoInterfaces;
 
 namespace WebSocketFlow.SocketAdapter

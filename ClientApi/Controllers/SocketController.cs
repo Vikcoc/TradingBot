@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebSocketFlow.Dto;
+using WebSocketFlow.Dto.Requests;
+using WebSocketFlow.Dto.Responses;
 using WebSocketFlow.Extra;
 using WebSocketFlow.SocketAdapter;
 
@@ -23,7 +24,11 @@ namespace ClientApi.Controllers
         public async Task<IActionResult>Debug2()
         {
             await _adapter.ConnectAndListen();
-            await _adapter.Send(new TickerRequestDto
+            _adapter.AddResponseCallback((Func<SubscriptionTickResponseDto, Task>)(async call =>
+            {
+                Console.WriteLine(call.Result?.Data?.First().PartChange);
+            }));
+            await _adapter.Send(new SubscriptionRequestDto
             {
                 Tickers = new List<string>
                 {
