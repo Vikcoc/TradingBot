@@ -24,9 +24,10 @@ namespace ClientApi.Controllers
         public async Task<IActionResult>Debug2()
         {
             await _adapter.ConnectAndListen();
-            _adapter.AddResponseCallback((Func<SubscriptionTickResponseDto, Task>)(async call =>
+            _adapter.AddResponseCallback((Func<SubscriptionTickResponseDto, Task>)(call =>
             {
                 Console.WriteLine(call.Result?.Data?.First().PartChange);
+                return Task.CompletedTask;
             }));
             await _adapter.Send(new SubscriptionRequestDto
             {
