@@ -20,7 +20,7 @@ namespace WebSocketFlow.SocketAdapter
         {
             _socketAdapter.OnReceive += async s =>
             {
-                if (s.Contains(T.ClassMethod))
+                if (T.CanJson(s))
                 {
                     var res = JsonConvert.DeserializeObject<T>(s)!;
                     await callback(res);

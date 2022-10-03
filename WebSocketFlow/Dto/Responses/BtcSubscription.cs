@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using WebSocketFlow.DtoInterfaces;
+using WebSocketFlow.Extra;
 
 namespace WebSocketFlow.Dto.Responses
 {
-    public class SubscriptionInfoDto
+    public class BtcSubscription : IResponseDto
     {
         [JsonProperty("instrument_name")]
         public string InstrumentName { get; set; } = string.Empty;
@@ -14,5 +16,6 @@ namespace WebSocketFlow.Dto.Responses
         [JsonProperty("data")]
         public List<SubscriptionDataDto>? Data { get; set; }
 
+        public static bool CanJson(string json) => json.Contains(Tickers.BtcUsd);
     }
 }
