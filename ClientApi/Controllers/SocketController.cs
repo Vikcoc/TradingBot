@@ -24,7 +24,7 @@ namespace ClientApi.Controllers
         public async Task<IActionResult>Debug2()
         {
             await _adapter.ConnectAndListen();
-            _adapter.AddResponseCallback((Func<SubscriptionTickResponseDto, Task>)(call =>
+            _adapter.AddResponseCallback((Func<SubscriptionTickResponseDto<BtcSubscription>, Task>)(call =>
             {
                 Console.WriteLine(call.Result?.Data?.First().PartChange);
                 return Task.CompletedTask;
