@@ -31,9 +31,10 @@ namespace ClientApi.Controllers
             }));
             await _adapter.Send(new SubscriptionRequestDto
             {
-                Tickers = new List<string>
+                Channels = new List<string>
                 {
-                    Tickers.BtcUsd
+                    Tickers.BtcUsd,
+                    Trades.BtcUsd
                 }
             });
             return Ok();

@@ -6,7 +6,7 @@ namespace WebSocketFlow.Dto.Requests
 {
     public class SubscriptionRequestDto : IRequestDto
     {
-        public ICollection<string> Tickers { get; set; } = new List<string>();
+        public ICollection<string> Channels { get; set; } = new List<string>();
         public IBaseTransactionDto ToTransactionDto()
         {
             return new TransactionWithParams
@@ -14,7 +14,7 @@ namespace WebSocketFlow.Dto.Requests
                 Method = Methods.Subscribe,
                 Params = new Dictionary<string, object>
                 {
-                    {"channels", Tickers}
+                    {"channels", Channels}
                 }
             };
         }
