@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using WebSocketFlow.DtoInterfaces;
+using WebSocketFlow.Dto;
 using WebSocketFlow.Extra;
 
-namespace WebSocketFlow.Dto.Requests
+namespace WebSocketFlow.Subscription.Request
 {
     public class SubscriptionRequestDto : IRequestDto
     {

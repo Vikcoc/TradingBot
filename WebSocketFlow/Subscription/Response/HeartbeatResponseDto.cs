@@ -1,7 +1,7 @@
 ﻿using WebSocketFlow.DtoInterfaces;
 using WebSocketFlow.Extra;
 
-namespace WebSocketFlow.Dto.Responses
+namespace WebSocketFlow.Subscription.Response
 {
     public class HeartbeatResponseDto : IResponseDto, IStandardResponse
     {

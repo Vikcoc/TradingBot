@@ -1,4 +1,4 @@
-﻿namespace WebSocketFlow.DtoInterfaces
+﻿namespace WebSocketFlow
 {
     public interface IResponseDto
     {

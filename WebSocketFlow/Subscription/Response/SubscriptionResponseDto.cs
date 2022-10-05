@@ -1,10 +1,8 @@
-﻿using Newtonsoft.Json;
-using WebSocketFlow.DtoInterfaces;
-using WebSocketFlow.Extra;
+﻿using WebSocketFlow.Extra;
 
-namespace WebSocketFlow.Dto.Responses
+namespace WebSocketFlow.Subscription.Response
 {
-    public class SubscriptionTickResponseDto<T> : ISubscriptionResponse<T> where T : IResponseDto
+    public class SubscriptionResponseDto<T, TU> : ISubscriptionResponse<T> where T : IResponseDto, ISubscriptionInfo<TU> where TU : ISubscriptionData
     {
         public static bool CanJson(string json) => json.Contains(Methods.Subscribe) && T.CanJson(json);
 

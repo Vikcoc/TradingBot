@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WebSocketFlow.DtoInterfaces
+namespace WebSocketFlow.Subscription
 {
     public interface ISubscriptionResponse<T> : IResponseDto where T : IResponseDto
     {

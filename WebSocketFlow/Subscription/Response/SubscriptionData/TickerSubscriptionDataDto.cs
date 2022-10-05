@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using WebSocketFlow.Extra;
 
-namespace WebSocketFlow.Dto.Responses
+namespace WebSocketFlow.Subscription.Response.SubscriptionData
 {
-    public class SubscriptionDataDto
+    public class TickerSubscriptionDataDto : ISubscriptionData
     {
         [JsonProperty("i")]
         public string InstrumentName { get; set; } = string.Empty;
@@ -36,5 +37,7 @@ namespace WebSocketFlow.Dto.Responses
 
         [JsonProperty("pc")]
         public double? PartChange { get; set; }
+
+        public static string Type => Exchanges.Ticker;
     }
 }

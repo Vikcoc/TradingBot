@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System;
-using WebSocketFlow.DtoInterfaces;
 
 namespace WebSocketFlow.SocketAdapter
 {

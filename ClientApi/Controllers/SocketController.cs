@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebSocketFlow.Dto.Requests;
-using WebSocketFlow.Dto.Responses;
 using WebSocketFlow.Extra;
 using WebSocketFlow.SocketAdapter;
+using WebSocketFlow.Subscription.Request;
+using WebSocketFlow.Subscription.Response;
+using WebSocketFlow.Subscription.Response.SubscriptionData;
 
 namespace ClientApi.Controllers
 {
@@ -24,9 +25,14 @@ namespace ClientApi.Controllers
         public async Task<IActionResult>Debug2()
         {
             await _adapter.ConnectAndListen();
-            _adapter.AddResponseCallback((Func<SubscriptionTickResponseDto<BtcSubscription>, Task>)(call =>
+            _adapter.AddResponseCallback((Func<SubscriptionResponseDto<BtcSubscriptionDto<TickerSubscriptionDataDto>, TickerSubscriptionDataDto>, Task>)(call =>
             {
                 Console.WriteLine(call.Result?.Data?.First().PartChange);
+                return Task.CompletedTask;
+            }));
+            _adapter.AddResponseCallback((Func<SubscriptionResponseDto<BtcSubscriptionDto<TradeSubscriptionDataDto>, TradeSubscriptionDataDto>, Task>)(call =>
+            {
+                Console.WriteLine(call.Result?.Data?.First().Action);
                 return Task.CompletedTask;
             }));
             await _adapter.Send(new SubscriptionRequestDto

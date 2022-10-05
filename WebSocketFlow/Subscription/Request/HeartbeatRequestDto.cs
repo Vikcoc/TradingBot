@@ -1,7 +1,8 @@
-﻿using WebSocketFlow.DtoInterfaces;
+﻿using WebSocketFlow.Dto;
+using WebSocketFlow.DtoInterfaces;
 using WebSocketFlow.Extra;
 
-namespace WebSocketFlow.Dto.Requests
+namespace WebSocketFlow.Subscription.Request
 {
     public class HeartbeatRequestDto : IRequestDto
     {
