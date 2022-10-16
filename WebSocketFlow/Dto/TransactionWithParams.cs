@@ -6,6 +6,6 @@ namespace WebSocketFlow.Dto
     public class TransactionWithParams : BaseTransactionDto
     {
         [JsonProperty("params")]
-        public ICollection<KeyValuePair<string, object>> Params { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Params { get; set; } = new Dictionary<string, object>();
     }
 }

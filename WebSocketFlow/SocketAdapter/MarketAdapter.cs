@@ -9,6 +9,7 @@ namespace WebSocketFlow.SocketAdapter
     public class MarketAdapter : IMarketAdapter
     {
         private readonly ISocketAdapter _socketAdapter;
+        private event Func<IRequestDto, Task>? RequestCallback;
 
         public MarketAdapter(ISocketAdapter socketAdapter)
         {
@@ -27,6 +28,15 @@ namespace WebSocketFlow.SocketAdapter
             };
         }
 
+        public void AddRequestCallback<T>(Func<T, Task> callback) where T : IRequestDto
+        {
+            RequestCallback += async s =>
+            {
+                if (s is T dto)
+                    await callback(dto);
+            };
+        }
+
         protected virtual string SocketEndpoint => "wss://stream.crypto.com/v2/market";
 
         public async Task ConnectAndListen()
@@ -42,6 +52,11 @@ namespace WebSocketFlow.SocketAdapter
         public Task Disconnect() => _socketAdapter.Disconnect();
         
         public bool IsConnected => _socketAdapter.IsConnected;
-        public Task Send(IRequestDto dto) => _socketAdapter.Send(dto.ToTransactionDto().ToJson());
+        public async Task Send(IRequestDto dto)
+        {
+            if (RequestCallback != null) 
+                await RequestCallback(dto);
+            await _socketAdapter.Send(dto.ToTransactionDto().ToJson());
+        }
     }
 }

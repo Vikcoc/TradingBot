@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebSocketFlow.Extra;
 using WebSocketFlow.SocketAdapter;
+using WebSocketFlow.SpotTrading;
 using WebSocketFlow.Subscription.Request;
 using WebSocketFlow.Subscription.Response;
 using WebSocketFlow.Subscription.Response.SubscriptionData;
@@ -57,6 +58,13 @@ namespace ClientApi.Controllers
         public async Task<IActionResult> Debug4()
         {
             await _adapter2.ConnectListenAndAuthenticate();
+            _adapter2.AddRequestCallback((Func<AccountSummaryRequestDto, Task>)(x =>
+            {
+                Console.WriteLine(x.Currency);
+                return Task.CompletedTask;
+            }));
+            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Btc });
+            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Usdt });
             return Ok();
         }
 

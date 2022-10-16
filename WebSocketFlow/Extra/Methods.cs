@@ -6,5 +6,6 @@
         public static string HeartbeatRequest = "public/respond-heartbeat";
         public static string Authenticate = "public/auth";
         public static string Subscribe = "subscribe";
+        public static string AccountSummary = "private/get-account-summary";
     }
 }
