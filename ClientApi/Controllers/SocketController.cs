@@ -23,7 +23,7 @@ namespace ClientApi.Controllers
         }
 
         [HttpGet("StartListening")]
-        public async Task<IActionResult>Debug2()
+        public async Task<IActionResult> Debug2()
         {
             await _adapter.ConnectAndListen();
             _adapter.AddResponseCallback((Func<SubscriptionResponseDto<BtcSubscriptionDto<TickerSubscriptionDataDto>, TickerSubscriptionDataDto>, Task>)(call =>

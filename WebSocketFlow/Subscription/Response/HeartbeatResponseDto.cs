@@ -1,5 +1,4 @@
-﻿using WebSocketFlow.DtoInterfaces;
-using WebSocketFlow.Extra;
+﻿using WebSocketFlow.Extra;
 
 namespace WebSocketFlow.Subscription.Response
 {

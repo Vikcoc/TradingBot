@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using WebSocketFlow.DtoInterfaces;
 
 namespace WebSocketFlow.Dto
 {

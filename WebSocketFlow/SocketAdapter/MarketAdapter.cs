@@ -50,11 +50,11 @@ namespace WebSocketFlow.SocketAdapter
         }
 
         public Task Disconnect() => _socketAdapter.Disconnect();
-        
+
         public bool IsConnected => _socketAdapter.IsConnected;
         public async Task Send(IRequestDto dto)
         {
-            if (RequestCallback != null) 
+            if (RequestCallback != null)
                 await RequestCallback(dto);
             await _socketAdapter.Send(dto.ToTransactionDto().ToJson());
         }

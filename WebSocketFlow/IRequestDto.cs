@@ -1,6 +1,4 @@
-﻿using WebSocketFlow.DtoInterfaces;
-
-namespace WebSocketFlow
+﻿namespace WebSocketFlow
 {
     public interface IRequestDto
     {

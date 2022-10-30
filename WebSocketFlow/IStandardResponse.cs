@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WebSocketFlow.DtoInterfaces
+namespace WebSocketFlow
 {
     public interface IStandardResponse
     {
