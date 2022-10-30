@@ -2,8 +2,8 @@
 {
     public static class Exchanges
     {
-        public static string Ticker = "ticker.";
-        public static string Trade = "trade.";
-        public static string BtcUsd = "BTC_USDT";
+        public const string Ticker = "ticker.";
+        public const string Trade = "trade.";
+        public const string BtcUsd = "BTC_USDT";
     }
 }

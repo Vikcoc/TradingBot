@@ -2,7 +2,7 @@
 {
     public static class Currencies
     {
-        public static string Btc = "BTC";
-        public static string Usdt = "USDT";
+        public const string Btc = "BTC";
+        public const string Usd = "USDT";
     }
 }

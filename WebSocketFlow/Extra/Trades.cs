@@ -2,6 +2,6 @@
 {
     public static class Trades
     {
-        public static string BtcUsd = "trade.BTC_USDT";
+        public const string BtcUsd = "trade.BTC_USDT";
     }
 }

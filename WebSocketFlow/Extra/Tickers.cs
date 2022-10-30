@@ -2,6 +2,6 @@
 {
     public static class Tickers
     {
-        public static string BtcUsd = "ticker.BTC_USDT";
+        public const string BtcUsd = "ticker.BTC_USDT";
     }
 }

@@ -64,7 +64,14 @@ namespace ClientApi.Controllers
                 return Task.CompletedTask;
             }));
             await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Btc });
-            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Usdt });
+            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Usd });
+            await _adapter2.Send(new CreateOrderRequestDto
+            {
+                InstrumentName = Exchanges.BtcUsd,
+                Side = "SELL",
+                Type = "MARKET",
+                Quantity = 0.000004M,
+            });
             return Ok();
         }
 
