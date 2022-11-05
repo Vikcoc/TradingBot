@@ -2,7 +2,7 @@
 
 namespace WebSocketFlow.Subscription.Response
 {
-    public class SubscriptionResponseDto<T, TU> : IResultResponse<T> where T : IResponseDto, ISubscriptionInfo<TU> where TU : ISubscriptionData
+    public class SubscriptionResponseDto<T> : IResultResponse<T> where T : IResponseDto
     {
         public static bool CanJson(string json) => json.Contains(Methods.Subscribe) && T.CanJson(json);
 

@@ -26,12 +26,12 @@ namespace ClientApi.Controllers
         public async Task<IActionResult> Debug2()
         {
             await _adapter.ConnectAndListen();
-            _adapter.AddResponseCallback((Func<SubscriptionResponseDto<BtcSubscriptionDto<TickerSubscriptionDataDto>, TickerSubscriptionDataDto>, Task>)(call =>
+            _adapter.AddResponseCallback((Func<SubscriptionResponseDto<BtcSubscriptionDto<TickerSubscriptionDataDto>>, Task>)(call =>
             {
                 Console.WriteLine(call.Result?.Data?.First().PartChange);
                 return Task.CompletedTask;
             }));
-            _adapter.AddResponseCallback((Func<SubscriptionResponseDto<BtcSubscriptionDto<TradeSubscriptionDataDto>, TradeSubscriptionDataDto>, Task>)(call =>
+            _adapter.AddResponseCallback((Func<SubscriptionResponseDto<BtcSubscriptionDto<TradeSubscriptionDataDto>>, Task>)(call =>
             {
                 Console.WriteLine(call.Result?.Data?.First().Action);
                 return Task.CompletedTask;
@@ -58,19 +58,17 @@ namespace ClientApi.Controllers
         public async Task<IActionResult> Debug4()
         {
             await _adapter2.ConnectListenAndAuthenticate();
-            _adapter2.AddRequestCallback((Func<AccountSummaryRequestDto, Task>)(x =>
+            _adapter.AddResponseCallback((Func<SubscriptionResponseDto<UserBalanceResponseDto>, Task>)(call =>
             {
-                Console.WriteLine(x.Currency);
+                Console.WriteLine(call.Result?.Data?.First().Balance);
                 return Task.CompletedTask;
             }));
-            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Btc });
-            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Usd });
-            await _adapter2.Send(new CreateOrderRequestDto
+            await _adapter2.Send(new SubscriptionRequestDto
             {
-                InstrumentName = Exchanges.BtcUsd,
-                Side = "SELL",
-                Type = "MARKET",
-                Quantity = 0.000004M,
+                Channels = new List<string>
+                {
+                    Methods.UserBalance
+                }
             });
             return Ok();
         }
@@ -79,6 +77,32 @@ namespace ClientApi.Controllers
         public async Task<IActionResult> Debug5()
         {
             await _adapter2.Disconnect();
+            return Ok();
+        }
+
+        [HttpGet("buy_0.000004M")]
+        public async Task<IActionResult> Buy()
+        {
+            await _adapter2.Send(new CreateOrderRequestDto
+            {
+                InstrumentName = Exchanges.BtcUsd,
+                Side = "BUY",
+                Type = "MARKET",
+                Quantity = 0.00001M,
+            });
+            return Ok();
+        }
+
+        [HttpGet("sell_0.000004M")]
+        public async Task<IActionResult> Sell()
+        {
+            await _adapter2.Send(new CreateOrderRequestDto
+            {
+                InstrumentName = Exchanges.BtcUsd,
+                Side = "SELL",
+                Type = "MARKET",
+                Quantity = 0.00001M,
+            });
             return Ok();
         }
     }
