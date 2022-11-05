@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using WebSocketFlow.Extra;
 using WebSocketFlow.Subscription.Response.SubscriptionData;
 
 namespace WebSocketFlow.Subscription.Response
@@ -12,6 +13,6 @@ namespace WebSocketFlow.Subscription.Response
         public string Channel { get; set; } = string.Empty;
         [JsonProperty("data")]
         public List<BalanceDataDto>? Data { get; set; }
-        public static bool CanJson(string json) => json.Contains("user.balance");
+        public static bool CanJson(string json) => json.Contains(Methods.UserBalance);
     }
 }

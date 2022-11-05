@@ -8,5 +8,6 @@
         public const string Subscribe = "subscribe";
         public const string AccountSummary = "private/get-account-summary";
         public const string CreateOrder = "private/create-order";
+        public const string UserBalance = "user.balance";
     }
 }

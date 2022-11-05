@@ -58,23 +58,16 @@ namespace ClientApi.Controllers
         public async Task<IActionResult> Debug4()
         {
             await _adapter2.ConnectListenAndAuthenticate();
-            _adapter2.AddRequestCallback((Func<AccountSummaryRequestDto, Task>)(x =>
-            {
-                Console.WriteLine(x.Currency);
-                return Task.CompletedTask;
-            }));
             _adapter.AddResponseCallback((Func<SubscriptionResponseDto<UserBalanceResponseDto>, Task>)(call =>
             {
                 Console.WriteLine(call.Result?.Data?.First().Balance);
                 return Task.CompletedTask;
             }));
-            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Btc });
-            await _adapter2.Send(new AccountSummaryRequestDto { Currency = Currencies.Usd });
             await _adapter2.Send(new SubscriptionRequestDto
             {
                 Channels = new List<string>
                 {
-                    "user.balance"
+                    Methods.UserBalance
                 }
             });
             return Ok();
