@@ -80,7 +80,7 @@ namespace ClientApi.Controllers
             return Ok();
         }
 
-        [HttpGet("buy_0.000004M")]
+        [HttpGet("buy_0.00001M")]
         public async Task<IActionResult> Buy()
         {
             await _adapter2.Send(new CreateOrderRequestDto
@@ -93,7 +93,7 @@ namespace ClientApi.Controllers
             return Ok();
         }
 
-        [HttpGet("sell_0.000004M")]
+        [HttpGet("sell_0.00001M")]
         public async Task<IActionResult> Sell()
         {
             await _adapter2.Send(new CreateOrderRequestDto

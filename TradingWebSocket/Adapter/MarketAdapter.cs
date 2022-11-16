@@ -1,17 +1,16 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
-using WebSocketFlow.Subscription.Request;
-using WebSocketFlow.Subscription.Response;
+using TradingWebSocket.Socket;
 
-namespace WebSocketFlow.SocketAdapter
+namespace TradingWebSocket.Adapter
 {
-    public class MarketAdapter : IMarketAdapter
+    public abstract class MarketAdapter : IMarketAdapter
     {
         private readonly ISocketAdapter _socketAdapter;
-        private event Func<IRequestDto, Task>? RequestCallback;
+        private event Func<ITransaction, Task>? RequestCallback;
 
-        public MarketAdapter(ISocketAdapter socketAdapter)
+        protected MarketAdapter(ISocketAdapter socketAdapter)
         {
             _socketAdapter = socketAdapter;
         }
@@ -28,7 +27,7 @@ namespace WebSocketFlow.SocketAdapter
             };
         }
 
-        public void AddRequestCallback<T>(Func<T, Task> callback) where T : IRequestDto
+        public void AddRequestCallback<T>(Func<T, Task> callback) where T : ITransaction
         {
             RequestCallback += async s =>
             {
@@ -37,11 +36,10 @@ namespace WebSocketFlow.SocketAdapter
             };
         }
 
-        protected virtual string SocketEndpoint => "wss://stream.crypto.com/v2/market";
+        protected abstract string SocketEndpoint { get; set; }
 
-        public async Task ConnectAndListen()
+        public virtual async Task ConnectAndListen()
         {
-            AddResponseCallback<HeartbeatResponseDto>(async x => await Send(new HeartbeatRequestDto { Id = x.Id }));
             await _socketAdapter.Connect(SocketEndpoint);
 #pragma warning disable CS4014
             _socketAdapter.StartListening();
@@ -52,11 +50,12 @@ namespace WebSocketFlow.SocketAdapter
         public Task Disconnect() => _socketAdapter.Disconnect();
 
         public bool IsConnected => _socketAdapter.IsConnected;
-        public async Task Send(IRequestDto dto)
+
+        public async Task Send(ITransaction dto)
         {
             if (RequestCallback != null)
                 await RequestCallback(dto);
-            await _socketAdapter.Send(dto.ToTransactionDto().ToJson());
+            await _socketAdapter.Send(dto.ToJson());
         }
     }
 }
