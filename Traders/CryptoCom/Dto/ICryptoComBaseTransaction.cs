@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Traders.CryptoCom
+namespace Traders.CryptoCom.Dto
 {
-    public interface ICryptoComBaseResponse
+    public interface ICryptoComBaseTransaction
     {
         [JsonProperty("id")]
         public long Id { get; set; }

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Traders.CryptoCom.Socket;
 using Traders.Data;
 using TradingWebSocket.Adapter;
 using TradingWebSocket.BaseTrader;
 
-namespace Traders
+namespace Traders.CryptoCom
 {
     public class CryptoComTrader : ITrader
     {
-        protected readonly IMarketAdapter MarketAdapter;
-        protected readonly IUserAdapter UserAdapter;
+        protected readonly CryptoComMarketAdapter MarketAdapter;
+        protected readonly CryptoComUserAdapter UserAdapter;
 
         private Trades _trade;
 
@@ -20,17 +21,19 @@ namespace Traders
             return Task.CompletedTask;
         }
 
-        public CryptoComTrader(IMarketAdapter marketAdapter, IUserAdapter userAdapter)
+        public CryptoComTrader(CryptoComMarketAdapter marketAdapter, CryptoComUserAdapter userAdapter)
         {
             MarketAdapter = marketAdapter;
             UserAdapter = userAdapter;
         }
 
-        //public async Task Configure(Trades trade)
-        //{
-        //    _trade = trade;
-        //    MarketAdapter.AddResponseCallback();
-        //}
+        public async Task Configure(Trades trade)
+        {
+            if (_trade != default)
+                throw new NotSupportedException("Cannot reconfigure " + this.GetType().Name);
+            _trade = trade;
+            MarketAdapter.AddResponseCallback<>();
+        }
 
         public event Func<double, Task>? PriceUpdate;
         public event Func<double, Task>? BuyAvailableUpdate;

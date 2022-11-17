@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
 using TradingWebSocket.Socket;
@@ -10,30 +11,12 @@ namespace TradingWebSocket.Adapter
         private readonly ISocketAdapter _socketAdapter;
         private event Func<ITransaction, Task>? RequestCallback;
 
+        public void AddSocketResponse<T>(IResponseFactory<T> factory) where T : IResponseDto => _socketAdapter.OnReceive += factory.DeserializeObjectAndAct;
+        public void RemoveSocketResponse<T>(IResponseFactory<T> factory) where T : IResponseDto => _socketAdapter.OnReceive -= factory.DeserializeObjectAndAct;
+
         protected MarketAdapter(ISocketAdapter socketAdapter)
         {
             _socketAdapter = socketAdapter;
-        }
-
-        public void AddResponseCallback<T>(Func<T, Task> callback) where T : IResponseDto
-        {
-            _socketAdapter.OnReceive += async s =>
-            {
-                if (T.CanJson(s))
-                {
-                    var res = JsonConvert.DeserializeObject<T>(s)!;
-                    await callback(res);
-                }
-            };
-        }
-
-        public void AddRequestCallback<T>(Func<T, Task> callback) where T : ITransaction
-        {
-            RequestCallback += async s =>
-            {
-                if (s is T dto)
-                    await callback(dto);
-            };
         }
 
         protected abstract string SocketEndpoint { get; set; }

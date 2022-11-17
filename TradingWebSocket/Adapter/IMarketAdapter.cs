@@ -5,8 +5,8 @@ namespace TradingWebSocket.Adapter
 {
     public interface IMarketAdapter
     {
-        void AddResponseCallback<T>(Func<T, Task> callback) where T : IResponseDto;
-        void AddRequestCallback<T>(Func<T, Task> callback) where T : ITransaction;
+        public void AddSocketResponse<T>(IResponseFactory<T> factory) where T : IResponseDto;
+        public void RemoveSocketResponse<T>(IResponseFactory<T> factory) where T : IResponseDto;
         Task ConnectAndListen();
         Task Disconnect();
         bool IsConnected { get; }
