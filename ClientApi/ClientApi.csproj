@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Traders\Traders.csproj" />
     <ProjectReference Include="..\WebSocketFlow\WebSocketFlow.csproj" />
   </ItemGroup>
 

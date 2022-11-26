@@ -6,7 +6,6 @@ using Traders.CryptoCom.Data;
 using Traders.CryptoCom.Dto;
 using Traders.CryptoCom.Socket;
 using Traders.Data;
-using TradingWebSocket.Adapter;
 using TradingWebSocket.BaseTrader;
 
 namespace Traders.CryptoCom
@@ -32,15 +31,16 @@ namespace Traders.CryptoCom
             var tickerFactory = new CryptoComSubscriptionResponseFactory<CryptoComSubscriptionTickerData>(Trade);
             tickerFactory.OnValidObject += async response =>
             {
-                if (PriceUpdate != null && response.Result != null)
+                if (PriceUpdate != null && response.Result is { Data: { } })
                 {
-                    foreach (var data in response.Result.Where(data => data.Actual != null))
+                    foreach (var data in response.Result.Data.Where(data => data.Actual != null))
                     {
                         await PriceUpdate(data.Actual!.Value);
                     }
                 }
             };
             MarketAdapter.AddSocketResponse(tickerFactory);
+            await MarketAdapter.ConnectAndListen();
             await MarketAdapter.Send(new CryptoComSubscriptionRequest
             {
                 Channels = new List<string>

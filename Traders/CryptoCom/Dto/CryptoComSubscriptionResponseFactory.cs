@@ -21,11 +21,19 @@ namespace Traders.CryptoCom.Dto
 
         public async Task DeserializeObjectAndAct(string obj)
         {
-            if (CryptoComSubscriptionResponse<T>.CanJson(obj) && obj.Contains(Trades[_trade]))
+            try
             {
-                var res = JsonConvert.DeserializeObject<CryptoComSubscriptionResponse<T>>(obj)!;
-                if (OnValidObject != null)
-                    await OnValidObject(res);
+                if (CryptoComSubscriptionResponse<T>.CanJson(obj) && obj.Contains(Trades[_trade]))
+                {
+                    var res = JsonConvert.DeserializeObject<CryptoComSubscriptionResponse<T>>(obj)!;
+                    if (OnValidObject != null)
+                        await OnValidObject(res);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
 

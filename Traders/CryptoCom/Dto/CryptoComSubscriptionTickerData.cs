@@ -25,7 +25,7 @@ namespace Traders.CryptoCom.Dto
         public double? High { get; set; }
 
         [JsonProperty("v")]
-        public long Volume { get; set; }
+        public double Volume { get; set; }
 
         [JsonProperty("c")]
         public double? Change { get; set; }
@@ -34,7 +34,7 @@ namespace Traders.CryptoCom.Dto
         public long Timestamp { get; set; }
 
         [JsonProperty("vv")]
-        public long BigVolume { get; set; }
+        public double BigVolume { get; set; }
 
         [JsonProperty("pc")]
         public double? PartChange { get; set; }

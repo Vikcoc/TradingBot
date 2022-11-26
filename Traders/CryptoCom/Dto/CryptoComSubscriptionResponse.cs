@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Traders.CryptoCom.Data;
 using TradingWebSocket.Adapter;
 
@@ -10,6 +11,7 @@ namespace Traders.CryptoCom.Dto
 
         public long Id { get; set; }
         public string Method { get; set; } = string.Empty;
-        public List<T>? Result { get; set; }
+        [JsonProperty("result")]
+        public CryptoComSubscriptionResult<T>? Result { get; set; }
     }
 }
