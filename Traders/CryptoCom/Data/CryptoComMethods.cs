@@ -9,5 +9,6 @@
         public const string Authenticate = "public/auth";
         public const string Subscribe = "subscribe";
         public const string Ticker = "ticker";
+        public const string Balance = "user.balance";
     }
 }

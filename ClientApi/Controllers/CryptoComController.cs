@@ -22,11 +22,21 @@ namespace ClientApi.Controllers
         {
             _cryptoComTrader.PriceUpdate += d =>
             {
-                Console.WriteLine(d);
+                Console.WriteLine("Price: " + d);
+                return Task.CompletedTask;
+            };
+            _cryptoComTrader.BuyAvailableUpdate += d =>
+            {
+                Console.WriteLine("Buy: " + d);
+                return Task.CompletedTask;
+            };
+            _cryptoComTrader.SellAvailableUpdate += d =>
+            {
+                Console.WriteLine("Sell: " + d);
                 return Task.CompletedTask;
             };
 
-                await _cryptoComTrader.Start(Trades.BtcUsd);
+            await _cryptoComTrader.Start(Trades.BtcUsd);
             return Ok();
         }
     }

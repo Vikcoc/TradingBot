@@ -4,7 +4,7 @@ using TradingWebSocket.Adapter;
 
 namespace Traders.CryptoCom.Dto
 {
-    public class CryptoComSubscriptionTickerData : IResponseDto
+    internal class CryptoComSubscriptionTickerData : IResponseDto
     {
         [JsonProperty("i")]
         public string InstrumentName { get; set; } = string.Empty;

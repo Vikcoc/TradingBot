@@ -7,6 +7,7 @@ using Traders.CryptoCom.Dto;
 using Traders.CryptoCom.Socket;
 using Traders.Data;
 using TradingWebSocket.BaseTrader;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Traders.CryptoCom
 {
@@ -40,12 +41,37 @@ namespace Traders.CryptoCom
                 }
             };
             MarketAdapter.AddSocketResponse(tickerFactory);
+            var balanceFactory = new CryptoComResponseFactory<CryptoComSubscriptionResponse<CryptoComSubscriptionBalanceData>>();
+            balanceFactory.OnValidObject += async response =>
+            {
+                if (BuyAvailableUpdate != null && response.Result is { Data: { } })
+                {
+                    var btc = response.Result.Data.FirstOrDefault(x => x.Currency == "BTC");
+                    if(btc != null)
+                        await BuyAvailableUpdate(btc.Available);
+                }
+                if (SellAvailableUpdate != null && response.Result is { Data: { } })
+                {
+                    var usd = response.Result.Data.FirstOrDefault(x => x.Currency == "USDT");
+                    if (usd != null)
+                        await SellAvailableUpdate(usd.Available);
+                }
+            };
+            UserAdapter.AddSocketResponse(balanceFactory);
             await MarketAdapter.ConnectAndListen();
+            await UserAdapter.ConnectAndListen();
+            await UserAdapter.Send(new CryptoComSubscriptionRequest
+            {
+                Channels = new List<string>
+                {
+                    CryptoComMethods.Balance,
+                }
+            });
             await MarketAdapter.Send(new CryptoComSubscriptionRequest
             {
                 Channels = new List<string>
                 {
-                    CryptoComMethods.Ticker + "." + CryptoComTrades.Trades[trade]
+                    CryptoComMethods.Ticker + "." + CryptoComTrades.Trades[trade],
                 }
             });
         }
