@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Traders.CryptoCom;
 using Traders.Data;
-using TradingWebSocket.BaseTrader;
 
 namespace ClientApi.Controllers
 {
@@ -20,6 +18,9 @@ namespace ClientApi.Controllers
         [HttpGet("Connect")]
         public async Task<IActionResult> ConnectAsync()
         {
+            //todo Make logic to distinguish between buy and sell
+            //todo Get rid of hardcoded strings
+            //todo implement basic algorithm
             _cryptoComTrader.PriceUpdate += d =>
             {
                 Console.WriteLine("Price: " + d);
@@ -27,16 +28,32 @@ namespace ClientApi.Controllers
             };
             _cryptoComTrader.BuyAvailableUpdate += d =>
             {
-                Console.WriteLine("Buy: " + d);
+                Console.WriteLine("Buy: " + d + " USDT");
                 return Task.CompletedTask;
             };
             _cryptoComTrader.SellAvailableUpdate += d =>
             {
-                Console.WriteLine("Sell: " + d);
+                Console.WriteLine("Sell: " + d + " BTC");
                 return Task.CompletedTask;
             };
 
             await _cryptoComTrader.Start(Trades.BtcUsd);
+            return Ok();
+        }
+
+        [HttpGet("buy_0.00001")]
+        public async Task<IActionResult> Buy()
+        {
+            Console.WriteLine("I am buying");
+            await _cryptoComTrader.Buy(0.00001);
+            return Ok();
+        }
+
+        [HttpGet("sell_0.00001")]
+        public async Task<IActionResult> Sell()
+        {
+            Console.WriteLine("I am selling");
+            await _cryptoComTrader.Sell(0.00001);
             return Ok();
         }
     }

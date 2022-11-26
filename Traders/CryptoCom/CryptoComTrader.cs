@@ -46,13 +46,13 @@ namespace Traders.CryptoCom
             {
                 if (BuyAvailableUpdate != null && response.Result is { Data: { } })
                 {
-                    var btc = response.Result.Data.FirstOrDefault(x => x.Currency == "BTC");
+                    var btc = response.Result.Data.FirstOrDefault(x => x.Currency == "USDT");
                     if(btc != null)
                         await BuyAvailableUpdate(btc.Available);
                 }
                 if (SellAvailableUpdate != null && response.Result is { Data: { } })
                 {
-                    var usd = response.Result.Data.FirstOrDefault(x => x.Currency == "USDT");
+                    var usd = response.Result.Data.FirstOrDefault(x => x.Currency == "BTC");
                     if (usd != null)
                         await SellAvailableUpdate(usd.Available);
                 }
@@ -82,14 +82,28 @@ namespace Traders.CryptoCom
         public double Price { get; set; }
         public double BuyAvailable { get; set; }
         public double SellAvailable { get; set; }
-        public Task<bool> Buy(double amount)
+        public async Task<bool> Buy(double amount)
         {
-            throw new NotImplementedException();
+            await UserAdapter.Send(new CryptoComOrderRequest
+            {
+                InstrumentName = CryptoComTrades.Trades[Trade],
+                Side = "BUY",
+                Type = "MARKET",
+                Quantity = amount,
+            });
+            return true;
         }
 
-        public Task<bool> Sell(double amount)
+        public async Task<bool> Sell(double amount)
         {
-            throw new NotImplementedException();
+            await UserAdapter.Send(new CryptoComOrderRequest
+            {
+                InstrumentName = CryptoComTrades.Trades[Trade],
+                Side = "SELL",
+                Type = "MARKET",
+                Quantity = amount,
+            });
+            return true;
         }
     }
 }

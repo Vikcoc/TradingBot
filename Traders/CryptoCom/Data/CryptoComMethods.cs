@@ -10,5 +10,6 @@
         public const string Subscribe = "subscribe";
         public const string Ticker = "ticker";
         public const string Balance = "user.balance";
+        public const string CreateOrder = "private/create-order";
     }
 }
