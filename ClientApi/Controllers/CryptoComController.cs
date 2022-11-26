@@ -20,7 +20,13 @@ namespace ClientApi.Controllers
         [HttpGet("Connect")]
         public async Task<IActionResult> ConnectAsync()
         {
-            await _cryptoComTrader.Start(Trades.BtcUsd);
+            _cryptoComTrader.PriceUpdate += d =>
+            {
+                Console.WriteLine(d);
+                return Task.CompletedTask;
+            };
+
+                await _cryptoComTrader.Start(Trades.BtcUsd);
             return Ok();
         }
     }
