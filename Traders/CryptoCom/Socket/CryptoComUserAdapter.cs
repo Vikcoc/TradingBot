@@ -3,6 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Traders.CryptoCom.Data;
 using Traders.CryptoCom.Dto;
 using TradingWebSocket.Socket;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Traders.CryptoCom.Data;
 using Traders.CryptoCom.Dto;
 using TradingWebSocket.Adapter;
 using TradingWebSocket.Socket;

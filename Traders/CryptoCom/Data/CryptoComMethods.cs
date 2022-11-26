@@ -1,4 +1,4 @@
-﻿namespace Traders.CryptoCom
+﻿namespace Traders.CryptoCom.Data
 {
     public static class CryptoComMethods
     {
@@ -7,5 +7,7 @@
         public const string HeartbeatResponse = "public/heartbeat";
         public const string HeartbeatRequest = "public/respond-heartbeat";
         public const string Authenticate = "public/auth";
+        public const string Subscribe = "subscribe";
+        public const string Ticker = "ticker";
     }
 }
