@@ -7,7 +7,7 @@ namespace Traders.CryptoCom.Dto
 {
     internal class CryptoComSubscriptionRequest : ITransaction
     {
-        public List<string> Channels { get; set; } = new List<string>();
+        public List<string> Channels { get; set; } = new ();
 
         public string ToJson()
         {
