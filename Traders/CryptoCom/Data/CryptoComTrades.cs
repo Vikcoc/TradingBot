@@ -24,9 +24,9 @@ namespace Traders.CryptoCom.Data
 
         public class CryptoComTradeStrings
         {
-            public required string Trade { get; set;} = string.Empty;
-            public required string FirstCurrency { get; set;} = string.Empty;
-            public required string SecondCurrency { get; set;} = string.Empty;
+            public string Trade { get; set;} = string.Empty;
+            public string FirstCurrency { get; set;} = string.Empty;
+            public string SecondCurrency { get; set;} = string.Empty;
         }
     }
 }
