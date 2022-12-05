@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Traders.CryptoCom.Data;
 using Traders.CryptoCom.Dto;
 using Traders.CryptoCom.Socket;
-using Traders.Data;
 using TradingWebSocket.BaseTrader;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Traders.CryptoCom
 {
@@ -36,6 +34,7 @@ namespace Traders.CryptoCom
                 {
                     foreach (var data in response.Result.Data.Where(data => data.Actual != null))
                     {
+                        Price = data.Actual!.Value;
                         await PriceUpdate(data.Actual!.Value);
                     }
                 }
@@ -44,17 +43,22 @@ namespace Traders.CryptoCom
             var balanceFactory = new CryptoComResponseFactory<CryptoComSubscriptionResponse<CryptoComSubscriptionBalanceData>>();
             balanceFactory.OnValidObject += async response =>
             {
-                if (BuyAvailableUpdate != null && response.Result is { Data: { } })
+                if(response.Result is { Data: { } })
                 {
-                    var btc = response.Result.Data.FirstOrDefault(x => x.Currency == "USDT");
-                    if(btc != null)
-                        await BuyAvailableUpdate(btc.Available);
-                }
-                if (SellAvailableUpdate != null && response.Result is { Data: { } })
-                {
-                    var usd = response.Result.Data.FirstOrDefault(x => x.Currency == "BTC");
-                    if (usd != null)
-                        await SellAvailableUpdate(usd.Available);
+                    var first = response.Result.Data.FirstOrDefault(x => x.Currency == CryptoComTrades.Trades[Trade].FirstCurrency);
+                    if (first != null)
+                    {
+                        BuyAvailable = first.Available;
+                        if (BuyAvailableUpdate != null)
+                            await BuyAvailableUpdate(first.Available);
+                    }
+                    var second = response.Result.Data.FirstOrDefault(x => x.Currency == CryptoComTrades.Trades[Trade].SecondCurrency);
+                    if (second != null)
+                    {
+                        SellAvailable = second.Available;
+                        if (SellAvailableUpdate != null)
+                            await SellAvailableUpdate(second.Available);
+                    }
                 }
             };
             UserAdapter.AddSocketResponse(balanceFactory);
@@ -71,7 +75,7 @@ namespace Traders.CryptoCom
             {
                 Channels = new List<string>
                 {
-                    CryptoComMethods.Ticker + "." + CryptoComTrades.Trades[trade],
+                    CryptoComMethods.Ticker + "." + CryptoComTrades.Trades[trade].Trade,
                 }
             });
         }

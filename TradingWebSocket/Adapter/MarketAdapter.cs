@@ -1,11 +1,13 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using TradingWebSocket.Socket;
 
 namespace TradingWebSocket.Adapter
 {
+    //todo rename to trader adapter or smth
+    /// <summary>
+    /// Wrapper over ISocketAdapter to separate communication channel into relevat information streams
+    /// </summary>
     public abstract class MarketAdapter : IMarketAdapter
     {
         private readonly ISocketAdapter _socketAdapter;
