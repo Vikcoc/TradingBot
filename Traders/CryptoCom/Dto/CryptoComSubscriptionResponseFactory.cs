@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using Traders.CryptoCom.Data;
 using TradingWebSocket.Adapter;
 using TradingWebSocket.BaseTrader;
-using static Traders.CryptoCom.Data.CryptoComTrades;
 
 namespace Traders.CryptoCom.Dto
 {
     public class CryptoComSubscriptionResponseFactory<T> : IResponseFactory<CryptoComSubscriptionResponse<T>> where T : IResponseDto
     {
         private readonly Trades _trade;
-        protected Dictionary<Trades, CryptoComTradeStrings> Trades => CryptoComTrades.Trades;
+        protected Dictionary<Trades, CryptoComTrades.CryptoComTradeStrings> Trades => CryptoComTrades.Trades;
 
 
         public CryptoComSubscriptionResponseFactory(Trades trade)

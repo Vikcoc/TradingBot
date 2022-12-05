@@ -90,7 +90,7 @@ namespace Traders.CryptoCom
         {
             await UserAdapter.Send(new CryptoComOrderRequest
             {
-                InstrumentName = CryptoComTrades.Trades[Trade],
+                InstrumentName = CryptoComTrades.Trades[Trade].Trade,
                 Side = "BUY",
                 Type = "MARKET",
                 Quantity = amount,
@@ -102,7 +102,7 @@ namespace Traders.CryptoCom
         {
             await UserAdapter.Send(new CryptoComOrderRequest
             {
-                InstrumentName = CryptoComTrades.Trades[Trade],
+                InstrumentName = CryptoComTrades.Trades[Trade].Trade,
                 Side = "SELL",
                 Type = "MARKET",
                 Quantity = amount,

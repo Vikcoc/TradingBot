@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Traders.CryptoCom;
 using TradingWebSocket.BaseTrader;
-using Traders.Data;
 
 namespace ClientApi.Controllers
 {
