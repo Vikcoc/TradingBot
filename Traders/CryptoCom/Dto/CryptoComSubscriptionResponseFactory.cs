@@ -3,15 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Traders.CryptoCom.Data;
-using Traders.Data;
 using TradingWebSocket.Adapter;
+using TradingWebSocket.BaseTrader;
+using static Traders.CryptoCom.Data.CryptoComTrades;
 
 namespace Traders.CryptoCom.Dto
 {
     public class CryptoComSubscriptionResponseFactory<T> : IResponseFactory<CryptoComSubscriptionResponse<T>> where T : IResponseDto
     {
         private readonly Trades _trade;
-        protected Dictionary<Trades, string> Trades => CryptoComTrades.Trades;
+        protected Dictionary<Trades, CryptoComTradeStrings> Trades => CryptoComTrades.Trades;
 
 
         public CryptoComSubscriptionResponseFactory(Trades trade)
@@ -23,7 +24,7 @@ namespace Traders.CryptoCom.Dto
         {
             try
             {
-                if (CryptoComSubscriptionResponse<T>.CanJson(obj) && obj.Contains(Trades[_trade]))
+                if (CryptoComSubscriptionResponse<T>.CanJson(obj) && obj.Contains(Trades[_trade].Trade))
                 {
                     var res = JsonConvert.DeserializeObject<CryptoComSubscriptionResponse<T>>(obj)!;
                     if (OnValidObject != null)
