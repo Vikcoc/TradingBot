@@ -11,24 +11,14 @@ namespace Traders.CryptoCom.Dto
 
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(new CryptoComSubscriptionRequestHidden
+            return JsonConvert.SerializeObject(new CryptoComParamRequest
             {
+                Method = CryptoComMethods.Subscribe,
                 Params = new Dictionary<string, object>
                 {
                     {"channels", Channels}
                 }
             });
-        }
-
-        internal class CryptoComSubscriptionRequestHidden : CryptoComBaseRequest
-        {
-            public CryptoComSubscriptionRequestHidden()
-            {
-                Method = CryptoComMethods.Subscribe;
-            }
-
-            [JsonProperty("params")]
-            public Dictionary<string, object>? Params { get; set; }
         }
     }
 }

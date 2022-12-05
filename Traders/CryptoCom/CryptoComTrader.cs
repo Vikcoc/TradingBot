@@ -86,14 +86,28 @@ namespace Traders.CryptoCom
         public double Price { get; set; }
         public double BuyAvailable { get; set; }
         public double SellAvailable { get; set; }
-        public Task<bool> Buy(double amount)
+        public async Task<bool> Buy(double amount)
         {
-            throw new NotImplementedException();
+            await UserAdapter.Send(new CryptoComOrderRequest
+            {
+                InstrumentName = CryptoComTrades.Trades[Trade].FirstCurrency,
+                Side = "BUY",
+                Type = "MARKET",
+                Quantity = amount,
+            });
+            return true;
         }
 
-        public Task<bool> Sell(double amount)
+        public async Task<bool> Sell(double amount)
         {
-            throw new NotImplementedException();
+            await UserAdapter.Send(new CryptoComOrderRequest
+            {
+                InstrumentName = CryptoComTrades.Trades[Trade].SecondCurrency,
+                Side = "SELL",
+                Type = "MARKET",
+                Quantity = amount,
+            });
+            return true;
         }
     }
 }

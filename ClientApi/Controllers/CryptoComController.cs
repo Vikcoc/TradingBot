@@ -38,5 +38,21 @@ namespace ClientApi.Controllers
             await _cryptoComTrader.Start(Trades.BtcUsd);
             return Ok();
         }
+
+        [HttpGet("buy_0.00001")]
+        public async Task<IActionResult> Buy()
+        {
+            Console.WriteLine("I am buying");
+            await _cryptoComTrader.Buy(0.00001);
+            return Ok();
+        }
+
+        [HttpGet("sell_0.00001")]
+        public async Task<IActionResult> Sell()
+        {
+            Console.WriteLine("I am selling");
+            await _cryptoComTrader.Sell(0.00001);
+            return Ok();
+        }
     }
 }
