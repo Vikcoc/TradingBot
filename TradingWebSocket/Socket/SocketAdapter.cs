@@ -62,7 +62,7 @@ namespace TradingWebSocket.Socket
                 await objectStream.WriteAsync(buffer.Array!, 0, receiveResult.Count, CancellationToken.None);
                 objectStream.Seek(0, SeekOrigin.Begin);
                 var responseString = await streamReader.ReadToEndAsync();
-                Console.WriteLine("Received: " + responseString);
+                //Console.WriteLine("Received: " + responseString);
                 if (!string.IsNullOrWhiteSpace(responseString) && OnReceive != null)
                     await OnReceive(responseString);
             }
@@ -84,7 +84,7 @@ namespace TradingWebSocket.Socket
         /// <returns></returns>
         public async Task Send(string dto)
         {
-            Console.WriteLine("Send: " + dto);
+            //Console.WriteLine("Send: " + dto);
             await _clientWebSocket.SendAsync(Encoding.ASCII.GetBytes(dto), WebSocketMessageType.Text, true,
                 CancellationToken.None);
         }

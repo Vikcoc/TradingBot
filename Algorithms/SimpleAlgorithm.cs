@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -32,12 +33,12 @@ namespace Algorithms
 
             _trader.PriceUpdate += OnPriceUpdate;
 
-            _amountToTrade = 0.00001;
+            _amountToTrade = 0.001;
         }
 
-        public void StartAlgorithm()
+        public async Task StartAlgorithm()
         {
-            _tradeTimer.Start();
+            await _trader.Start(Trades.EthUsd);
             _calibrateTimer.Start();
         }
 
@@ -69,12 +70,17 @@ namespace Algorithms
 
         private async void OnTradeTimerElapsed(object? sender, ElapsedEventArgs e)
         {
-            if (_trader.Price >= _buyThreshold)
+            Console.WriteLine("Try trade");
+            if (_trader.Price >= _buyThreshold && _amountToTrade * _trader.Price < _trader.SellAvailable)
             {
+                var x = _amountToTrade * _trader.Price > _trader.SellAvailable;
+                Console.WriteLine("Try buy {0}", _amountToTrade);
                 await _trader.Buy(_amountToTrade);
             }
-            else if (_trader.Price <= _sellThreshold)
+            else if (_trader.Price <= _sellThreshold && _trader.BuyAvailable > _amountToTrade)
             {
+                var y = _trader.BuyAvailable > _amountToTrade;
+                Console.WriteLine("Try sell {0}", _amountToTrade);
                 await _trader.Sell(_amountToTrade);
             }
         }
@@ -84,6 +90,8 @@ namespace Algorithms
             // Calculate the 90th percentile of the collected data
             var highPercentile = CalculatePercentile(70);
             var lowPercentile = CalculatePercentile(30);
+
+            Console.WriteLine("Low Price: {0}, High Price: {1}", lowPercentile, highPercentile);
 
             // Initialize the threshold values using the calculated percentile
             _buyThreshold = lowPercentile;

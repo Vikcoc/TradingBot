@@ -48,5 +48,11 @@ namespace TradingWebSocket.BaseTrader
         /// What instrument are trades being performed on
         /// </summary>
         public Trades Trade { get; }
+        /// <summary>
+        /// Instruct the algorithm to begin trading
+        /// </summary>
+        /// <param name="trade">The exchange</param>
+        /// <returns></returns>
+        public Task Start(Trades trade);
     }
 }
