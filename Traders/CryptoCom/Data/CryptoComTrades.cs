@@ -18,6 +18,14 @@ namespace Traders.CryptoCom.Data
                         SecondCurrency = "USDT",
                         Trade = "BTC_USDT"
                     }
+                },
+                { TradingWebSocket.BaseTrader.Trades.EthUsd,
+                    new CryptoComTradeStrings
+                    {
+                        FirstCurrency = "ETH",
+                        SecondCurrency = "USDT",
+                        Trade = "ETH_USDT"
+                    }
                 }
             };
         }

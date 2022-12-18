@@ -6,6 +6,7 @@
     public enum Trades
     {
         None,
-        BtcUsd
+        BtcUsd,
+        EthUsd
     }
 }

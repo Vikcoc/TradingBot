@@ -22,7 +22,7 @@ namespace OpenAi
             _trader.PriceUpdate += OnPriceUpdate;
             _timer = new Timer(60000); // Wait for one minute before setting the threshold values
             _timer.Elapsed += OnTimerElapsed;
-            _priceData = new Queue<double>(60); // Store the last 60 price updates (1 minute)
+            _priceData = new Queue<double>(400);
         }
 
         public void Start()
@@ -58,11 +58,11 @@ namespace OpenAi
         //}
 
 
-        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
             // Calculate the 90th percentile of the collected data
-            var highPercentile = CalculatePercentile(90);
-            var lowPercentile = CalculatePercentile(90);
+            var highPercentile = CalculatePercentile(70);
+            var lowPercentile = CalculatePercentile(30);
 
             // Initialize the threshold values using the calculated percentile
             _buyThreshold = lowPercentile;

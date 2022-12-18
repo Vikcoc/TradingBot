@@ -35,7 +35,7 @@ namespace ClientApi.Controllers
                 return Task.CompletedTask;
             };
 
-            await _cryptoComTrader.Start(Trades.BtcUsd);
+            await _cryptoComTrader.Start(Trades.EthUsd);
             return Ok();
         }
 

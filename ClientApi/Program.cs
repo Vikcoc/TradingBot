@@ -1,6 +1,8 @@
+using Algorithms;
 using System.Diagnostics;
 using Traders.CryptoCom;
 using Traders.CryptoCom.Socket;
+using TradingWebSocket.BaseTrader;
 using WebSocketFlow.SocketAdapter;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +45,8 @@ builder.Services.AddSingleton(x =>
     return new CryptoComUserAdapter(socketAdapter, apiKey, secretKey);
 });
 builder.Services.AddSingleton<CryptoComTrader>();
+builder.Services.AddSingleton<ITrader, CryptoComTrader>();
+builder.Services.AddSingleton<SimpleAlgorithm>();
 
 var app = builder.Build();
 
