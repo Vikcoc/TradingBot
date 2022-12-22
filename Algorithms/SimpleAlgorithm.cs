@@ -26,7 +26,7 @@ namespace Algorithms
             _calibrateTimer.Elapsed += OnCalibrateTimerElapsed;
             _calibrateTimer.Elapsed += StartTradeTimer;
 
-            _tradeTimer = new Timer(5000);
+            _tradeTimer = new Timer(10000);
             _tradeTimer.Elapsed += OnTradeTimerElapsed;
 
             _priceData = new Queue<double>(800);
@@ -73,17 +73,33 @@ namespace Algorithms
             Console.WriteLine("Try trade");
             if (_trader.Price >= _buyThreshold && _amountToTrade * _trader.Price < _trader.SellAvailable)
             {
-                var x = _amountToTrade * _trader.Price > _trader.SellAvailable;
+                //var x = _amountToTrade * _trader.Price > _trader.SellAvailable;
                 Console.WriteLine("Try buy {0}", _amountToTrade);
                 await _trader.Buy(_amountToTrade);
             }
             else if (_trader.Price <= _sellThreshold && _trader.BuyAvailable > _amountToTrade)
             {
-                var y = _trader.BuyAvailable > _amountToTrade;
+                //var y = _trader.BuyAvailable > _amountToTrade;
                 Console.WriteLine("Try sell {0}", _amountToTrade);
                 await _trader.Sell(_amountToTrade);
             }
+            //todo make real time adjustment to bounds
         }
+
+        //private async void OnTradeTimerElapsed(object? sender, ElapsedEventArgs e)
+        //{
+        //    Console.WriteLine("Try trade");
+        //    if (_trader.Price <= _sellThreshold && _amountToTrade * _trader.Price < _trader.SellAvailable)
+        //    {
+        //        Console.WriteLine("Try buy {0}", _amountToTrade);
+        //        await _trader.Buy(_amountToTrade);
+        //    }
+        //    else if (_trader.Price >= _buyThreshold && _trader.BuyAvailable > _amountToTrade)
+        //    {
+        //        Console.WriteLine("Try sell {0}", _amountToTrade);
+        //        await _trader.Sell(_amountToTrade);
+        //    }
+        //}
 
         private void OnCalibrateTimerElapsed(object? sender, ElapsedEventArgs e)
         {
