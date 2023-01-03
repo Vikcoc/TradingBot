@@ -7,7 +7,7 @@ using TradingWebSocket.BaseTrader;
 
 namespace Algorithms
 {
-    public class SimpleAlghoritm2
+    public class SimpleAlgorithm2
     {
         private readonly ITrader _trader;
         private readonly Timer _calibrateTimer;
@@ -15,7 +15,7 @@ namespace Algorithms
         private readonly Queue<double> _priceData;
         private readonly double _amountToTrade;
 
-        public SimpleAlghoritm2(ITrader trader)
+        public SimpleAlgorithm2(ITrader trader)
         {
             _trader = trader;
             _amountToTrade = 0.001;
@@ -66,7 +66,7 @@ namespace Algorithms
             var indexH = (high / 100.0) * dataArray.Length;
 
             // Return the value at the calculated index
-            return (data.ElementAt((int)low), data.ElementAt((int)high));
+            return (data.ElementAt((int)indexL), data.ElementAt((int)indexH));
         }
 
         private async void OnTradeTimerElapsed(object? sender, ElapsedEventArgs e)
@@ -76,13 +76,13 @@ namespace Algorithms
             Console.WriteLine("Low Price: {0}, High Price: {1}", lowPercentile, highPercentile);
 
             Console.WriteLine("Try trade");
-            if (_trader.Price >= lowPercentile && _amountToTrade * _trader.Price < _trader.SellAvailable)
+            if (_trader.Price > lowPercentile && _amountToTrade * _trader.Price < _trader.SellAvailable)
             {
                 //var x = _amountToTrade * _trader.Price > _trader.SellAvailable;
                 Console.WriteLine("Try buy {0}", _amountToTrade);
                 await _trader.Buy(_amountToTrade);
             }
-            else if (_trader.Price <= highPercentile && _trader.BuyAvailable > _amountToTrade)
+            else if (_trader.Price < highPercentile && _trader.BuyAvailable > _amountToTrade)
             {
                 //var y = _trader.BuyAvailable > _amountToTrade;
                 Console.WriteLine("Try sell {0}", _amountToTrade);

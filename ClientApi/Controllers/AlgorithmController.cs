@@ -10,10 +10,10 @@ namespace ClientApi.Controllers
     public class AlgorithmController : ControllerBase
     {
         private readonly ITrader _trader;
-        private readonly SimpleAlgorithm _algorithm;
+        private readonly SimpleAlgorithm2 _algorithm;
         private Timer _clsTimer;
 
-        public AlgorithmController(ITrader trader, SimpleAlgorithm algorithm)
+        public AlgorithmController(ITrader trader, SimpleAlgorithm2 algorithm)
         {
             _trader = trader;
             _algorithm = algorithm;
