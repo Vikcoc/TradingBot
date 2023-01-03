@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TradingWebSocket.BaseTrader;
 
@@ -31,6 +32,9 @@ namespace TraderProxy
         {
             using var scope = _serviceProvider.CreateAsyncScope();
             var context = scope.ServiceProvider.GetRequiredService<ProxyEfDbContext>();
+            //var s = < ![CDATA[ async ]]>
+            context.Database.SqlQueryRaw<int>("",
+                new SqlParameter("DateTime", DateTime.UtcNow));
             await context.MarketStateSnaps.AddAsync(new Entities.MarketStateSnap
             {
                 DateTime = DateTime.UtcNow,
@@ -41,29 +45,31 @@ namespace TraderProxy
             await context.SaveChangesAsync();
         }
 
-        public double BuyAvailable { get => _trader.BuyAvailable; }
-        public double SellAvailable { get => _trader.SellAvailable; }
+        public double BuyAvailable => _trader.BuyAvailable;
+        public double SellAvailable => _trader.SellAvailable;
 
         public Trades Trade => _trader.Trade;
 
         public event Func<double, Task> PriceUpdate
         {
-            add { _trader.PriceUpdate += value; }
-            remove { _trader.PriceUpdate -= value; }
+            add => _trader.PriceUpdate += value;
+            remove => _trader.PriceUpdate -= value;
         }
         public event Func<double, Task> BuyAvailableUpdate
         {
-            add { _trader.BuyAvailableUpdate += value; }
-            remove { _trader.BuyAvailableUpdate -= value; }
+            add => _trader.BuyAvailableUpdate += value;
+            remove => _trader.BuyAvailableUpdate -= value;
         }
         public event Func<double, Task> SellAvailableUpdate
         {
-            add { _trader.SellAvailableUpdate += value; }
-            remove { _trader.SellAvailableUpdate -= value; }
+            add => _trader.SellAvailableUpdate += value; 
+            remove => _trader.SellAvailableUpdate -= value;
         }
 
         public async Task<bool> Buy(double amount) => await _trader.Buy(amount);
 
         public async Task<bool> Sell(double amount) => await _trader.Sell(amount);
+
+        public async Task Start(Trades trade) => await _trader.Start(trade);
     }
 }
