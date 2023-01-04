@@ -20,13 +20,13 @@ namespace Algorithms
             _trader = trader;
             _amountToTrade = 0.001;
 
-            _calibrateTimer = new Timer(60000);
+            _calibrateTimer = new Timer(600000);
             _calibrateTimer.Elapsed += StartTradeTimer;
 
             _tradeTimer = new Timer(10000);
             _tradeTimer.Elapsed += OnTradeTimerElapsed;
 
-            _priceData = new Queue<double>(800);
+            _priceData = new Queue<double>(8000);
         }
 
         public async Task StartAlgorithm()
@@ -76,13 +76,13 @@ namespace Algorithms
             Console.WriteLine("Low Price: {0}, High Price: {1}", lowPercentile, highPercentile);
 
             Console.WriteLine("Try trade");
-            if (_trader.Price > lowPercentile && _amountToTrade * _trader.Price < _trader.SellAvailable)
+            if (_trader.Price < lowPercentile && _amountToTrade * _trader.Price < _trader.SellAvailable)
             {
                 //var x = _amountToTrade * _trader.Price > _trader.SellAvailable;
                 Console.WriteLine("Try buy {0}", _amountToTrade);
                 await _trader.Buy(_amountToTrade);
             }
-            else if (_trader.Price < highPercentile && _trader.BuyAvailable > _amountToTrade)
+            else if (_trader.Price > highPercentile && _trader.BuyAvailable > _amountToTrade)
             {
                 //var y = _trader.BuyAvailable > _amountToTrade;
                 Console.WriteLine("Try sell {0}", _amountToTrade);
