@@ -46,7 +46,7 @@ builder.Services.AddSingleton(x =>
 });
 builder.Services.AddSingleton<CryptoComTrader>();
 builder.Services.AddSingleton<ITrader, CryptoComTrader>();
-builder.Services.AddSingleton<SimpleAlgorithm>();
+builder.Services.AddSingleton<SimpleAlgorithm2>();
 
 var app = builder.Build();
 
