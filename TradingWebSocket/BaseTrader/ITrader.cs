@@ -11,7 +11,7 @@ namespace TradingWebSocket.BaseTrader
         /// <summary>
         /// Event to take action on the exchange rate update
         /// </summary>
-        public event Func<double, Task> PriceUpdate;
+        public event Func<IPriceUpdate, Task> PriceUpdate;
         /// <summary>
         /// Event to take action on the available funds to buy update
         /// </summary>
@@ -23,15 +23,15 @@ namespace TradingWebSocket.BaseTrader
         /// <summary>
         /// Get the current exchange rate
         /// </summary>
-        public double Price { get; }
+        public IPriceUpdate? Price { get; }
         /// <summary>
         /// Get the current available funds to buy
         /// </summary>
-        public double BuyAvailable { get; }
+        public double? BuyAvailable { get; }
         /// <summary>
         /// Get the current available funds to sell
         /// </summary>
-        public double SellAvailable { get; }
+        public double? SellAvailable { get; }
         /// <summary>
         /// Add transaction to buy first currency
         /// </summary>

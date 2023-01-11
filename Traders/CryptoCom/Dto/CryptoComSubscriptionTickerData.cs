@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Traders.CryptoCom.Data;
 using TradingWebSocket.Adapter;
+using TradingWebSocket.BaseTrader;
 
 namespace Traders.CryptoCom.Dto
 {
-    internal class CryptoComSubscriptionTickerData : IResponseDto
+    internal class CryptoComSubscriptionTickerData : IResponseDto, IPriceUpdate
     {
         [JsonProperty("i")]
-        public string InstrumentName { get; set; } = string.Empty;
+        public string? InstrumentName { get; set; } = string.Empty;
 
         [JsonProperty("b")]
         public double? BestBid { get; set; }

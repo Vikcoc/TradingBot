@@ -43,13 +43,13 @@ namespace Algorithms
             _tradeTimer.Stop();
         }
 
-        private Task OnPriceUpdate(double price)
+        private Task OnPriceUpdate(IPriceUpdate price)
         {
-            _priceData.Enqueue(price);
+            _priceData.Enqueue(price.Actual!.Value);
             return Task.CompletedTask;
         }
 
-        private Task OnPriceUpdate2(double price)
+        private Task OnPriceUpdate2(IPriceUpdate price)
         {
             _priceData.Dequeue();
             return Task.CompletedTask;
@@ -76,13 +76,13 @@ namespace Algorithms
             Console.WriteLine("Low Price: {0}, High Price: {1}", lowPercentile, highPercentile);
 
             Console.WriteLine("Try trade");
-            if (_trader.Price < lowPercentile && _amountToTrade * _trader.Price < _trader.SellAvailable)
+            if (_trader.Price!.Actual!.Value < lowPercentile && _amountToTrade * _trader.Price.Actual!.Value < _trader.SellAvailable)
             {
                 //var x = _amountToTrade * _trader.Price > _trader.SellAvailable;
                 Console.WriteLine("Try buy {0}", _amountToTrade);
                 await _trader.Buy(_amountToTrade);
             }
-            else if (_trader.Price > highPercentile && _trader.BuyAvailable > _amountToTrade)
+            else if (_trader.Price.Actual!.Value > highPercentile && _trader.BuyAvailable > _amountToTrade)
             {
                 //var y = _trader.BuyAvailable > _amountToTrade;
                 Console.WriteLine("Try sell {0}", _amountToTrade);

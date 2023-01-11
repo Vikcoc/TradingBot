@@ -36,10 +36,10 @@ namespace OpenAi
             _trader.PriceUpdate -= OnPriceUpdate;
         }
 
-        private Task OnPriceUpdate(double price)
+        private Task OnPriceUpdate(IPriceUpdate price)
         {
-            _currentPrice = price;
-            _priceData.Enqueue(price);
+            _currentPrice = price.Actual!.Value;
+            _priceData.Enqueue(price.Actual!.Value);
             return Task.CompletedTask;
         }
 
