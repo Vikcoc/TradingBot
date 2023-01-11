@@ -17,7 +17,7 @@ namespace TraderProxy.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -27,8 +27,35 @@ namespace TraderProxy.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Price")
+                    b.Property<double?>("Actual")
                         .HasColumnType("float");
+
+                    b.Property<double?>("BestAsk")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("BestBid")
+                        .HasColumnType("float");
+
+                    b.Property<double>("BigVolume")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Change")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("High")
+                        .HasColumnType("float");
+
+                    b.Property<string>("InstrumentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Low")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PartChange")
+                        .HasColumnType("float");
+
+                    b.Property<long>("Timestamp")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Trade")
                         .HasColumnType("int");
@@ -36,6 +63,9 @@ namespace TraderProxy.Migrations
                     b.Property<string>("TradeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
 
                     b.HasKey("DateTime");
 

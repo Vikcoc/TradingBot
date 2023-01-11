@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using TradingWebSocket.BaseTrader;
 
 namespace TraderProxy
@@ -8,49 +7,60 @@ namespace TraderProxy
     public sealed class ProxyTrader : ITrader
     {
         private readonly ITrader _trader;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ProxyEfDbContext _context;
 
-        public static async Task<ProxyTrader> GetInstance(ITrader trader, IServiceProvider serviceProvider)
+        public static async Task<ProxyTrader> GetInstance(ITrader trader, ProxyEfDbContext context)
         {
-            using var scope = serviceProvider.CreateAsyncScope();
-            var context = scope.ServiceProvider.GetRequiredService<ProxyEfDbContext>();
             await context.Database.MigrateAsync();
-            return new ProxyTrader(trader, serviceProvider);
+            return new ProxyTrader(trader, context);
         }
 
-        private ProxyTrader(ITrader trader, IServiceProvider serviceProvider)
+        private ProxyTrader(ITrader trader, ProxyEfDbContext context)
         {
             _trader = trader;
-            _serviceProvider = serviceProvider;
+            _context = context;
 
             _trader.PriceUpdate += SavePrice;
         }
 
-        public double Price { get => _trader.Price; }
-
-        private async Task SavePrice(double price)
+        public IPriceUpdate? Price => _trader.Price;
+        private double _price;
+        private async Task SavePrice(IPriceUpdate price)
         {
-            using var scope = _serviceProvider.CreateAsyncScope();
-            var context = scope.ServiceProvider.GetRequiredService<ProxyEfDbContext>();
-            //var s = < ![CDATA[ async ]]>
-            context.Database.SqlQueryRaw<int>("",
-                new SqlParameter("DateTime", DateTime.UtcNow));
-            await context.MarketStateSnaps.AddAsync(new Entities.MarketStateSnap
+            try
             {
-                DateTime = DateTime.UtcNow,
-                Price = price,
-                Trade = _trader.Trade,
-                TradeName = _trader.Trade.ToString(),
-            });
-            await context.SaveChangesAsync();
+                if(price.Actual == _price)
+                    return;
+                _price = price.Actual!.Value;
+                await _context.Database.ExecuteSqlRawAsync(
+                    "INSERT [TradingBot].[dbo].[MarketStateSnaps] ([DateTime], [Trade], [TradeName], [InstrumentName], [BestBid], [BestAsk], [Actual], [Low], [High], [Volume], [Change], [Timestamp], [BigVolume], [PartChange]) VALUES (@DateTime, @Trade, @TradeName, @InstrumentName, @BestBid, @BestAsk, @Actual, @Low, @High, @Volume, @Change, @Timestamp, @BigVolume, @PartChange)",
+                    new SqlParameter("@DateTime", DateTime.UtcNow),
+                    new SqlParameter("@Trade", Trade),
+                    new SqlParameter("@TradeName", Trade.ToString()),
+                    new SqlParameter("@InstrumentName", price.InstrumentName),
+                    new SqlParameter("@BestBid", price.BestBid),
+                    new SqlParameter("@BestAsk", price.BestAsk),
+                    new SqlParameter("@Actual", price.Actual),
+                    new SqlParameter("@Low", price.Low),
+                    new SqlParameter("@High", price.High),
+                    new SqlParameter("@Volume", price.Volume),
+                    new SqlParameter("@Change", price.Change),
+                    new SqlParameter("@Timestamp", price.Timestamp),
+                    new SqlParameter("@BigVolume", price.BigVolume),
+                    new SqlParameter("@PartChange", price.PartChange ?? default));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
-        public double BuyAvailable => _trader.BuyAvailable;
-        public double SellAvailable => _trader.SellAvailable;
+        public double? BuyAvailable => _trader.BuyAvailable;
+        public double? SellAvailable => _trader.SellAvailable;
 
         public Trades Trade => _trader.Trade;
 
-        public event Func<double, Task> PriceUpdate
+        public event Func<IPriceUpdate, Task> PriceUpdate
         {
             add => _trader.PriceUpdate += value;
             remove => _trader.PriceUpdate -= value;

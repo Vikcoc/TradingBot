@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace TraderProxy
 {
@@ -12,8 +14,12 @@ namespace TraderProxy
         /// <returns></returns>
         public ProxyEfDbContext CreateDbContext(string[] args)
         {
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("connection.json", true)
+                .Build();
             DbContextOptionsBuilder x = new DbContextOptionsBuilder();
-            x.UseSqlServer("");
+            x.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             return new ProxyEfDbContext(x.Options);
         }
     }

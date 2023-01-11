@@ -1,9 +1,12 @@
 using Algorithms;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using TraderProxy;
 using Traders.CryptoCom;
 using Traders.CryptoCom.Socket;
 using TradingWebSocket.BaseTrader;
 using WebSocketFlow.SocketAdapter;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,21 @@ builder.Services.AddSingleton(x =>
 builder.Services.AddSingleton<CryptoComTrader>();
 builder.Services.AddSingleton<ITrader, CryptoComTrader>();
 builder.Services.AddSingleton<SimpleAlgorithm2>();
+
+//builder.Services.AddDbContext<ProxyEfDbContext>(options =>
+//    options.Options.
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton<ProxyTrader>(provider =>
+{
+    var x = new DbContextOptionsBuilder();
+    x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    var db = new ProxyEfDbContext(x.Options);
+    //var db = provider.GetService<ProxyEfDbContext>();
+    Debug.Assert(db != null, nameof(db) + " != null");
+    var trader = provider.GetService<ITrader>();
+    Debug.Assert(trader != null, nameof(trader) + " != null");
+    return ProxyTrader.GetInstance(trader, db).Result;
+});
 
 var app = builder.Build();
 
