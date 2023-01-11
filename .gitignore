@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 /ClientApi/appsettings.Development.json
 /ClientApi/Properties/launchSettings.json
+/TraderProxy/Settings/connection-debug.json
+/TraderProxy/connection.json
