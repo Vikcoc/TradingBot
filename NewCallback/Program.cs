@@ -7,7 +7,7 @@ using WebSocketService.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 #region Services
-
+//todo https://learn.microsoft.com/en-us/dotnet/core/extensions/scoped-service
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(typeof(Program));
