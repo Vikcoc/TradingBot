@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraderProxy", "TraderProxy\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAi", "OpenAi\OpenAi.csproj", "{E86462E2-35D7-4A65-BE6F-2C789237F289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "Algorithms\Algorithms.csproj", "{3FF3CED8-9EE5-40BF-9262-CA2E8139A634}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms", "Algorithms\Algorithms.csproj", "{3FF3CED8-9EE5-40BF-9262-CA2E8139A634}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewCallback", "NewCallback\NewCallback.csproj", "{F04ABA42-0074-4983-8B70-7B62B6EA573C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketService", "WebSocketService\WebSocketService.csproj", "{70594897-769E-4A9B-B9F8-16854F44AFDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{3FF3CED8-9EE5-40BF-9262-CA2E8139A634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FF3CED8-9EE5-40BF-9262-CA2E8139A634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FF3CED8-9EE5-40BF-9262-CA2E8139A634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F04ABA42-0074-4983-8B70-7B62B6EA573C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F04ABA42-0074-4983-8B70-7B62B6EA573C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F04ABA42-0074-4983-8B70-7B62B6EA573C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F04ABA42-0074-4983-8B70-7B62B6EA573C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70594897-769E-4A9B-B9F8-16854F44AFDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70594897-769E-4A9B-B9F8-16854F44AFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70594897-769E-4A9B-B9F8-16854F44AFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70594897-769E-4A9B-B9F8-16854F44AFDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
