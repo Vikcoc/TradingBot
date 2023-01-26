@@ -352,3 +352,5 @@ MigrationBackup/
 /ClientApi/Properties/launchSettings.json
 /TraderProxy/Settings/connection-debug.json
 /TraderProxy/connection.json
+/NewCallback/Properties/launchSettings.json
+/NewCallback/appsettings.Development.json
