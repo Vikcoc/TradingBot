@@ -3,12 +3,12 @@ using WebSocketService.Interfaces;
 
 namespace NewCallback.TestingClasses
 {
-    public class SocketMessagesConsumer : INotificationConsumer<INotification<string>, string>
+    public class SocketMessagesConsumer2 : INotificationConsumer<INotification<string>, string>
     {
-        private readonly ILogger<SocketMessagesConsumer> _logger;
+        private readonly ILogger<SocketMessagesConsumer2> _logger;
         private readonly ScopedGuid _scope;
 
-        public SocketMessagesConsumer(ILogger<SocketMessagesConsumer> logger, ScopedGuid scope)
+        public SocketMessagesConsumer2(ILogger<SocketMessagesConsumer2> logger, ScopedGuid scope)
         {
             _logger = logger;
             _scope = scope;
@@ -16,7 +16,7 @@ namespace NewCallback.TestingClasses
         
         public Task ProcessNotification(INotification<string> notification, CancellationToken token)
         {
-            _logger.LogInformation("Consumer running at: {time} with scope: {scope}", notification.Info, _scope.Id);
+            _logger.LogWarning("Consumer number 2 running at: {time} with scope: {scope}", notification.Info, _scope.Id);
             return Task.CompletedTask;
         }
     }
