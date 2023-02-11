@@ -14,7 +14,7 @@ namespace OWT.BackgroundService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await _marketClient.Connect(stoppingToken);
-            await _marketClient.Send("", stoppingToken);
+            await _marketClient.Send("{\"method\":\"subscribe\",\"params\":{\"channels\":[\"ticker.ETH_USDT\"]}}", stoppingToken);
             while (!stoppingToken.IsCancellationRequested)
             {
                 var dto = await _marketClient.Receive(stoppingToken);
