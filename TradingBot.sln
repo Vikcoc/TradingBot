@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAi", "OpenAi\OpenAi.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms", "Algorithms\Algorithms.csproj", "{3FF3CED8-9EE5-40BF-9262-CA2E8139A634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewCallback", "NewCallback\NewCallback.csproj", "{F04ABA42-0074-4983-8B70-7B62B6EA573C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewCallback", "NewCallback\NewCallback.csproj", "{F04ABA42-0074-4983-8B70-7B62B6EA573C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketService", "WebSocketService\WebSocketService.csproj", "{70594897-769E-4A9B-B9F8-16854F44AFDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketService", "WebSocketService\WebSocketService.csproj", "{70594897-769E-4A9B-B9F8-16854F44AFDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWT", "OWT\OWT.csproj", "{C2E8E53F-FDD6-4FE3-995D-1ECE60C8EAE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{70594897-769E-4A9B-B9F8-16854F44AFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70594897-769E-4A9B-B9F8-16854F44AFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70594897-769E-4A9B-B9F8-16854F44AFDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2E8E53F-FDD6-4FE3-995D-1ECE60C8EAE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2E8E53F-FDD6-4FE3-995D-1ECE60C8EAE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2E8E53F-FDD6-4FE3-995D-1ECE60C8EAE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2E8E53F-FDD6-4FE3-995D-1ECE60C8EAE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
