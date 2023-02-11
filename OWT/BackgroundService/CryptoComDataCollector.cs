@@ -1,4 +1,6 @@
-﻿using OWT.CryptoCom;
+﻿using Newtonsoft.Json;
+using OWT.CryptoCom;
+using OWT.CryptoCom.Dto;
 
 namespace OWT.BackgroundService
 {
@@ -14,7 +16,15 @@ namespace OWT.BackgroundService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await _marketClient.Connect(stoppingToken);
-            await _marketClient.Send("{\"method\":\"subscribe\",\"params\":{\"channels\":[\"ticker.ETH_USDT\"]}}", stoppingToken);
+            var trans = new CryptoComParamTransaction
+            {
+                Method = "subscribe",
+                Params = new Dictionary<string, object>
+                {
+                    {"channels", new string[] {"ticker.ETH_USDT"}}
+                }
+            };
+            await _marketClient.Send(JsonConvert.SerializeObject(trans), stoppingToken);
             while (!stoppingToken.IsCancellationRequested)
             {
                 var dto = await _marketClient.Receive(stoppingToken);

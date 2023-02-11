@@ -1,4 +1,6 @@
-﻿namespace OWT.CryptoCom.Dto
+﻿using Newtonsoft.Json;
+
+namespace OWT.CryptoCom.Dto
 {
     public class CryptoComBaseTransaction
     {
@@ -18,7 +20,9 @@
             Semaphore.Release();
         }
 
+        [JsonProperty("id")]
         public long Id { get; set; }
+        [JsonProperty("method")]
         public string Method { get; set; } = string.Empty;
     }
 }
