@@ -354,3 +354,5 @@ MigrationBackup/
 /TraderProxy/connection.json
 /NewCallback/Properties/launchSettings.json
 /NewCallback/appsettings.Development.json
+/OWT/Properties/launchSettings.json
+/OWT/appsettings.Development.json
