@@ -1,17 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.Threading.Channels;
 
-namespace OWT.CryptoCom.ResponseHandlers 
+namespace OWT.CryptoCom.ResponseHandlers;
+
+public class TickerHandler : ICryptoComDtoExecutor
 {
-    public class TickerHandler : ICryptoComDtoExecutor
+    public bool CanExecute(JObject dto)
     {
-        public bool CanExecute(JObject dto) => dto["method"]?.ToString() == "subscribe" && dto["result"]?["channel"]?.ToString() == "ticker";
+        return dto["method"]?.ToString() == "subscribe" && dto["result"]?["channel"]?.ToString() == "ticker";
+    }
 
 
-        public Task Execute(JObject dto, CryptoComMarketClient marketClient, CancellationToken token)
-        {
-            Console.WriteLine("a");
-            return Task.CompletedTask;
-        }
+    public Task Execute(JObject dto, CryptoComMarketClient marketClient, CancellationToken token)
+    {
+        Console.WriteLine("a");
+        return Task.CompletedTask;
     }
 }
