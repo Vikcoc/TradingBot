@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWT", "OWT\OWT.csproj", "{C2E8E53F-FDD6-4FE3-995D-1ECE60C8EAE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiModel", "AiModel\AiModel.csproj", "{C5824C55-7871-4AF6-8848-24A07635257C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AiModel", "AiModel\AiModel.csproj", "{C5824C55-7871-4AF6-8848-24A07635257C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataExporter", "DataExporter\DataExporter.csproj", "{D716163C-6C29-4322-AFE7-BD58532F2045}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C5824C55-7871-4AF6-8848-24A07635257C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5824C55-7871-4AF6-8848-24A07635257C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5824C55-7871-4AF6-8848-24A07635257C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D716163C-6C29-4322-AFE7-BD58532F2045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D716163C-6C29-4322-AFE7-BD58532F2045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D716163C-6C29-4322-AFE7-BD58532F2045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D716163C-6C29-4322-AFE7-BD58532F2045}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
