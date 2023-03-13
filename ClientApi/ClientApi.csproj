@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Algorithms\Algorithms.csproj" />
     <ProjectReference Include="..\TraderProxy\TraderProxy.csproj" />
     <ProjectReference Include="..\WebSocketFlow\WebSocketFlow.csproj" />
   </ItemGroup>
