@@ -11,6 +11,9 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AiModel\AiModel.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="MlStuff\MLModel.zip">
       <DependentUpon>MLModel.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

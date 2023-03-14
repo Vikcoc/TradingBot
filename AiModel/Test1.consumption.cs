@@ -125,7 +125,7 @@ namespace AiModel
 
         #endregion
 
-        private static string MLNetModelPath = Path.GetFullPath("Test1.zip");
+        private static string MLNetModelPath = Path.GetFullPath("bin\\Debug\\net7.0\\Test1.zip");
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

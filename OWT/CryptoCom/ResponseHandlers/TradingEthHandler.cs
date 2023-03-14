@@ -24,13 +24,10 @@ namespace OWT.CryptoCom.ResponseHandlers {
             _amountToTrade = 0.001;
         }
 
-        public bool CanExecute(JObject dto) => true;
+        public bool CanExecute(JObject dto) => _debouncePass;
 
         public async Task Execute(JObject dto, CryptoComMarketClient marketClient, CancellationToken token)
         {
-            if(!_debouncePass)
-                return;
-
             var curPrice = await _connection.QueryFirstAsync<float>("SELECT TOP (1) [Actual] as Value FROM [TradingBot].[dbo].[MarketStateSnaps] order by [DateTime] desc");
             var req = new ModelInput {
                 Col3 = curPrice
