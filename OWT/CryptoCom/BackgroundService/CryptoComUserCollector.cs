@@ -48,10 +48,10 @@ public class CryptoComUserCollector : Microsoft.Extensions.Hosting.BackgroundSer
                 var val = await decider.Execute(JsonConvert.DeserializeObject<JObject>(dto), _userClient,
                     stoppingToken);
 
-                var toWrite = scope.ServiceProvider.GetRequiredService<BalanceHandler>();
-                if(toWrite.CanExecute(JsonConvert.DeserializeObject<JObject>(dto)))
-                    continue;
-                Console.WriteLine(dto);
+                //var toWrite = scope.ServiceProvider.GetRequiredService<BalanceHandler>();
+                //if(toWrite.CanExecute(JsonConvert.DeserializeObject<JObject>(dto)))
+                //    continue;
+                //Console.WriteLine(dto);
             }
         }
     }

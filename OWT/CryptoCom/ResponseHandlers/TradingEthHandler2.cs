@@ -29,7 +29,6 @@ namespace OWT.CryptoCom.ResponseHandlers {
         {
             var curPrice = await _connection.QueryFirstAsync<dynamic>("SELECT TOP(1) [DateTime], [BestBid], [BestAsk], [Actual], [Low], [High], [Volume], [Change], [BigVolume] FROM [MarketStateSnaps] ORDER BY [DateTime] DESC");
             var date = (DateTime)curPrice.DateTime;
-            var times = new object[] { date.Day, (int)date.DayOfWeek, date.Hour, date.Minute, date.Second, date.Millisecond };
 
             var predict = Test1.Predict(new Test1.ModelInput
             {

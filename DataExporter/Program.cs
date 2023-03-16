@@ -3,7 +3,11 @@
 using DataExporter;
 using System.Data.SqlClient;
 using Dapper;
+using DataExporter.Scripts;
 
+
+Script2.Run();
+return;
 Console.WriteLine("Hello, World!");
 
 var connection = new SqlConnection("Server=DESKTOP-U28TOVR;Database=TradingBot;Trusted_Connection=True;");

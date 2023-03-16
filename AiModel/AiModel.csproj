@@ -20,4 +20,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup Label="Test2">
+    <None Include="Test2.consumption.cs">
+      <DependentUpon>Test2.mbconfig</DependentUpon>
+    </None>
+    <None Include="Test2.training.cs">
+      <DependentUpon>Test2.mbconfig</DependentUpon>
+    </None>
+    <None Include="Test2.zip">
+      <DependentUpon>Test2.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
