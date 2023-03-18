@@ -6,7 +6,7 @@ using Dapper;
 using DataExporter.Scripts;
 
 
-Script2.Run();
+Script3.Run();
 return;
 Console.WriteLine("Hello, World!");
 

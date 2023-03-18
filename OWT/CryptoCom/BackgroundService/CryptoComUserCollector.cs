@@ -40,7 +40,7 @@ public class CryptoComUserCollector : Microsoft.Extensions.Hosting.BackgroundSer
             {
                 var nTim = DateTime.UtcNow;
                 var sPass = scope.ServiceProvider.GetRequiredService<SecondPass>();
-                sPass.Passed = (nTim - tim) >= TimeSpan.FromSeconds(50);
+                sPass.Passed = (nTim - tim) >= TimeSpan.FromSeconds(5);
                 if (sPass)
                     tim = nTim;
 
