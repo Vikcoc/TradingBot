@@ -44,4 +44,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup Label="DailyTradeModel">
+    <None Include="DailyTradeModel.consumption.cs">
+      <DependentUpon>DailyTradeModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="DailyTradeModel.training.cs">
+      <DependentUpon>DailyTradeModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="DailyTradeModel.zip">
+      <DependentUpon>DailyTradeModel.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
