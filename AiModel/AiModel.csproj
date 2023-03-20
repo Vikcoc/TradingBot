@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="1.7.1" />
     <PackageReference Include="Microsoft.ML.FastTree" Version="1.7.1" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="1.7.1" />
   </ItemGroup>
   <ItemGroup Label="Test2">
     <None Include="Test2.consumption.cs">
@@ -53,6 +54,18 @@
     </None>
     <None Include="DailyTradeModel.zip">
       <DependentUpon>DailyTradeModel.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="DailyTradeNormalised1">
+    <None Include="DailyTradeNormalised1.consumption.cs">
+      <DependentUpon>DailyTradeNormalised1.mbconfig</DependentUpon>
+    </None>
+    <None Include="DailyTradeNormalised1.training.cs">
+      <DependentUpon>DailyTradeNormalised1.mbconfig</DependentUpon>
+    </None>
+    <None Include="DailyTradeNormalised1.zip">
+      <DependentUpon>DailyTradeNormalised1.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
