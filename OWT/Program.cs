@@ -27,7 +27,7 @@ builder.Services.AddScoped<TickerWithEstimationHandler>();
 builder.Services.AddScoped<BalanceHandler>();
 builder.Services.AddScoped<CryptoComBalanceDto>();
 builder.Services.AddScoped<SecondPass>();
-builder.Services.AddScoped<TradingEthHandler9>();
+builder.Services.AddScoped<TradingEthHandler11>();
 builder.Services.AddScoped<OrderLoggingHandler>();
 builder.Services.AddScoped<TickerSaveHandler2>();
 builder.Services.AddScoped<CryptoComPurchaseDecider>();
@@ -44,7 +44,7 @@ builder.Services.AddScoped(s =>
     var res = new CryptoComUserDtoDecider();
     res.AddHandler(s.GetRequiredService<HeartbeatHandler>());
     res.AddHandler(s.GetRequiredService<BalanceHandler>());
-    res.AddHandler(s.GetRequiredService<TradingEthHandler9>());
+    res.AddHandler(s.GetRequiredService<TradingEthHandler11>());
     res.AddHandler(s.GetRequiredService<OrderLoggingHandler>());
     return res;
 });

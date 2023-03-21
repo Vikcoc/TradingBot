@@ -57,4 +57,40 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup Label="Averages">
+    <None Include="Averages.consumption.cs">
+      <DependentUpon>Averages.mbconfig</DependentUpon>
+    </None>
+    <None Include="Averages.training.cs">
+      <DependentUpon>Averages.mbconfig</DependentUpon>
+    </None>
+    <None Include="Averages.zip">
+      <DependentUpon>Averages.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="NormWithAverages">
+    <None Include="NormWithAverages.consumption.cs">
+      <DependentUpon>NormWithAverages.mbconfig</DependentUpon>
+    </None>
+    <None Include="NormWithAverages.training.cs">
+      <DependentUpon>NormWithAverages.mbconfig</DependentUpon>
+    </None>
+    <None Include="NormWithAverages.zip">
+      <DependentUpon>NormWithAverages.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="Lbl">
+    <None Include="Lbl.consumption.cs">
+      <DependentUpon>Lbl.mbconfig</DependentUpon>
+    </None>
+    <None Include="Lbl.training.cs">
+      <DependentUpon>Lbl.mbconfig</DependentUpon>
+    </None>
+    <None Include="Lbl.zip">
+      <DependentUpon>Lbl.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
