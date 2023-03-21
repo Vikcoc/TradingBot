@@ -55,7 +55,7 @@ namespace OWT.CryptoCom.ResponseHandlers
                 _amountToTrade,
                 _balanceDto.Eth);
 
-            if (0 < result.Score
+            if (0.3 < result.Score
                 && _amountToTrade * (double)((IDictionary<string, object>)curPrice)["Actual"] < _balanceDto.Usd)
             {
                 var trans = new CryptoComParamTransaction
@@ -71,7 +71,7 @@ namespace OWT.CryptoCom.ResponseHandlers
                 };
                 await marketClient.Send(JsonConvert.SerializeObject(trans), token);
             }
-            else if (0 > result.Score && _amountToTrade < _balanceDto.Eth)
+            else if (-0.3 > result.Score && _amountToTrade < _balanceDto.Eth)
             {
                 var trans = new CryptoComParamTransaction
                 {

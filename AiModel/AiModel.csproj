@@ -5,9 +5,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML" Version="1.7.1" />
-    <PackageReference Include="Microsoft.ML.FastTree" Version="1.7.1" />
-    <PackageReference Include="Microsoft.ML.LightGbm" Version="1.7.1" />
+    <PackageReference Include="Microsoft.ML" Version="2.0.1" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.1" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup Label="Test2">
     <None Include="Test2.consumption.cs">
@@ -66,6 +66,18 @@
     </None>
     <None Include="DailyTradeNormalised1.zip">
       <DependentUpon>DailyTradeNormalised1.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="Model7">
+    <None Include="Model7.consumption.cs">
+      <DependentUpon>Model7.mbconfig</DependentUpon>
+    </None>
+    <None Include="Model7.training.cs">
+      <DependentUpon>Model7.mbconfig</DependentUpon>
+    </None>
+    <None Include="Model7.zip">
+      <DependentUpon>Model7.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
