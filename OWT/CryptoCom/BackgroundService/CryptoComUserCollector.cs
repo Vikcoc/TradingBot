@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using OWT.CryptoCom.Deciders;
 using OWT.CryptoCom.Dto;
-using OWT.CryptoCom.ResponseHandlers;
 
 namespace OWT.CryptoCom.BackgroundService;
 
@@ -36,23 +35,16 @@ public class CryptoComUserCollector : Microsoft.Extensions.Hosting.BackgroundSer
         while (!stoppingToken.IsCancellationRequested)
         {
             var dto = await _userClient.Receive(stoppingToken);
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                var nTim = DateTime.UtcNow;
-                var sPass = scope.ServiceProvider.GetRequiredService<SecondPass>();
-                sPass.Passed = (nTim - tim) >= TimeSpan.FromSeconds(50);
-                if (sPass)
-                    tim = nTim;
+            using var scope = _serviceProvider.CreateScope();
+            var nTim = DateTime.UtcNow;
+            var sPass = scope.ServiceProvider.GetRequiredService<SecondPass>();
+            sPass.Passed = (nTim - tim) >= TimeSpan.FromSeconds(50);
+            if (sPass)
+                tim = nTim;
 
-                var decider = scope.ServiceProvider.GetRequiredService<CryptoComUserDtoDecider>();
-                var val = await decider.Execute(JsonConvert.DeserializeObject<JObject>(dto), _userClient,
-                    stoppingToken);
-
-                //var toWrite = scope.ServiceProvider.GetRequiredService<BalanceHandler>();
-                //if(toWrite.CanExecute(JsonConvert.DeserializeObject<JObject>(dto)))
-                //    continue;
-                //Console.WriteLine(dto);
-            }
+            var decider = scope.ServiceProvider.GetRequiredService<CryptoComUserDtoDecider>();
+            var val = await decider.Execute(JsonConvert.DeserializeObject<JObject>(dto), _userClient,
+                stoppingToken);
         }
     }
 }

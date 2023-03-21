@@ -26,7 +26,7 @@ public class TickerWithEstimationHandler : ICryptoComDtoExecutor
 
     public Task Execute(JObject dto, CryptoComMarketClient marketClient, CancellationToken token)
     {
-        var val = dto["result"]?["data"]?.Values<JObject>().FirstOrDefault()["a"]?.Value<float>();
+        var val = dto["result"]?["data"]?.Values<JObject>()?.FirstOrDefault()?["a"]?.Value<float>();
         var prev = _connection.Query<float?>(SelectQuery).FirstOrDefault();
         if (val == prev)
             return Task.CompletedTask;

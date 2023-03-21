@@ -1,10 +1,10 @@
 ﻿using AiModel;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using OWT.CryptoCom.Dto;
-using System.Data;
 using Dapper;
 using DataExporter.Scripts;
+using Newtonsoft.Json.Linq;
+using OWT.CryptoCom.Deciders;
+using OWT.CryptoCom.Dto;
+using System.Data;
 
 namespace OWT.CryptoCom.ResponseHandlers
 {
@@ -15,15 +15,17 @@ namespace OWT.CryptoCom.ResponseHandlers
         private readonly IDbConnection _connection;
         private readonly double _amountToTrade;
         private readonly ILogger<TradingEthHandler8> _logger;
+        private readonly CryptoComPurchaseDecider _purchaseDecider;
 
         private const string SelectQuery = "SELECT TOP (1) a.[DateTime], a.[Actual], ( SELECT TOP (1) [Actual] FROM [dbo].[MarketStateSnaps] b WHERE DATEADD(second, -55, a.DateTime) < b.DateTime AND b.DateTime < DATEADD(second, -45, a.DateTime) ORDER BY b.DateTime DESC ) as Past50s, ( SELECT TOP (1) [Actual] FROM [dbo].[MarketStateSnaps] b WHERE DATEADD(second, -35, a.DateTime) < b.DateTime AND b.DateTime < DATEADD(second, -25, a.DateTime) ORDER BY b.DateTime DESC ) as Past30s, ( SELECT TOP (1) [Actual] FROM [dbo].[MarketStateSnaps] b WHERE DATEADD(second, -15, a.DateTime) < b.DateTime AND b.DateTime < DATEADD(second, -5, a.DateTime) ORDER BY b.DateTime DESC ) as Past10s FROM [dbo].[MarketStateSnaps] a ORDER BY a.[DateTime] DESC";
 
-        public TradingEthHandler8(CryptoComBalanceDto balanceDto, SecondPass debouncePass, IDbConnection connection, ILogger<TradingEthHandler8> logger)
+        public TradingEthHandler8(CryptoComBalanceDto balanceDto, SecondPass debouncePass, IDbConnection connection, ILogger<TradingEthHandler8> logger, CryptoComPurchaseDecider purchaseDecider)
         {
             _balanceDto = balanceDto;
             _debouncePass = debouncePass;
             _connection = connection;
             _logger = logger;
+            _purchaseDecider = purchaseDecider;
             _amountToTrade = 0.001;
         }
 
@@ -59,33 +61,11 @@ namespace OWT.CryptoCom.ResponseHandlers
             if (0 < result.Score
                 && _amountToTrade * (double)curPrice.Actual < _balanceDto.Usd)
             {
-                var trans = new CryptoComParamTransaction
-                {
-                    Method = "private/create-order",
-                    Params = new Dictionary<string, object>
-                    {
-                        { "instrument_name", "ETH_USDT" },
-                        { "side", "BUY" },
-                        { "type", "MARKET" },
-                        { "quantity", _amountToTrade },
-                    }
-                };
-                await marketClient.Send(JsonConvert.SerializeObject(trans), token);
+                await _purchaseDecider.Buy(marketClient, token);
             }
             else if (0 > result.Score && _amountToTrade < _balanceDto.Eth)
             {
-                var trans = new CryptoComParamTransaction
-                {
-                    Method = "private/create-order",
-                    Params = new Dictionary<string, object>
-                    {
-                        { "instrument_name", "ETH_USDT" },
-                        { "side", "SELL" },
-                        { "type", "MARKET" },
-                        { "quantity", _amountToTrade },
-                    }
-                };
-                await marketClient.Send(JsonConvert.SerializeObject(trans), token);
+                await _purchaseDecider.Sell(marketClient, token);
             }
         }
     }

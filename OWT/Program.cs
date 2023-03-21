@@ -17,7 +17,7 @@ builder.Services.AddTransient<CryptoComUserClient>();
 builder.Services.AddTransient<CryptoComCredentials>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
-    return new CryptoComCredentials(configuration["ApiKey"], configuration["SecretKey"]);
+    return new CryptoComCredentials(configuration["ApiKey"] ?? "", configuration["SecretKey"] ?? "");
 });
 builder.Services.AddTransient<ISocketClient, SocketClient>();
 builder.Services.AddTransient<ClientWebSocket>();
@@ -27,9 +27,10 @@ builder.Services.AddScoped<TickerWithEstimationHandler>();
 builder.Services.AddScoped<BalanceHandler>();
 builder.Services.AddScoped<CryptoComBalanceDto>();
 builder.Services.AddScoped<SecondPass>();
-builder.Services.AddScoped<TradingEthHandler8>();
+builder.Services.AddScoped<TradingEthHandler9>();
 builder.Services.AddScoped<OrderLoggingHandler>();
 builder.Services.AddScoped<TickerSaveHandler2>();
+builder.Services.AddScoped<CryptoComPurchaseDecider>();
 builder.Services.AddScoped(s =>
 {
     var res = new CryptoComMarketDtoDecider();
@@ -43,7 +44,7 @@ builder.Services.AddScoped(s =>
     var res = new CryptoComUserDtoDecider();
     res.AddHandler(s.GetRequiredService<HeartbeatHandler>());
     res.AddHandler(s.GetRequiredService<BalanceHandler>());
-    res.AddHandler(s.GetRequiredService<TradingEthHandler8>());
+    res.AddHandler(s.GetRequiredService<TradingEthHandler9>());
     res.AddHandler(s.GetRequiredService<OrderLoggingHandler>());
     return res;
 });

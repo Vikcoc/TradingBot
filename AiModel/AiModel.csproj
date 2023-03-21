@@ -9,42 +9,6 @@
     <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.1" />
     <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.1" />
   </ItemGroup>
-  <ItemGroup Label="Test2">
-    <None Include="Test2.consumption.cs">
-      <DependentUpon>Test2.mbconfig</DependentUpon>
-    </None>
-    <None Include="Test2.training.cs">
-      <DependentUpon>Test2.mbconfig</DependentUpon>
-    </None>
-    <None Include="Test2.zip">
-      <DependentUpon>Test2.mbconfig</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup Label="Test3">
-    <None Include="Test3.consumption.cs">
-      <DependentUpon>Test3.mbconfig</DependentUpon>
-    </None>
-    <None Include="Test3.training.cs">
-      <DependentUpon>Test3.mbconfig</DependentUpon>
-    </None>
-    <None Include="Test3.zip">
-      <DependentUpon>Test3.mbconfig</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup Label="Test4">
-    <None Include="Test4.consumption.cs">
-      <DependentUpon>Test4.mbconfig</DependentUpon>
-    </None>
-    <None Include="Test4.training.cs">
-      <DependentUpon>Test4.mbconfig</DependentUpon>
-    </None>
-    <None Include="Test4.zip">
-      <DependentUpon>Test4.mbconfig</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   <ItemGroup Label="DailyTradeModel">
     <None Include="DailyTradeModel.consumption.cs">
       <DependentUpon>DailyTradeModel.mbconfig</DependentUpon>
@@ -78,6 +42,18 @@
     </None>
     <None Include="Model7.zip">
       <DependentUpon>Model7.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="MinMaxNorm">
+    <None Include="MinMaxNorm.consumption.cs">
+      <DependentUpon>MinMaxNorm.mbconfig</DependentUpon>
+    </None>
+    <None Include="MinMaxNorm.training.cs">
+      <DependentUpon>MinMaxNorm.mbconfig</DependentUpon>
+    </None>
+    <None Include="MinMaxNorm.zip">
+      <DependentUpon>MinMaxNorm.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

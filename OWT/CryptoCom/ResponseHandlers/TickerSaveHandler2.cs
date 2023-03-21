@@ -8,14 +8,14 @@ namespace OWT.CryptoCom.ResponseHandlers
     public class TickerSaveHandler2 : ICryptoComDtoExecutor
     {
         private readonly IDbConnection _connection;
-        private readonly ILogger<TickerSaveHandler> _logger;
+        private readonly ILogger<TickerSaveHandler2> _logger;
 
 
 
         private const string SelectQuery = "SELECT TOP (1) [Actual] AS Value FROM [NewMarketSnaps] WHERE [Instrument] = @Instrument ORDER BY [Timestamp] DESC";
         private const string InsertQuery = "INSERT INTO [TradingBot].[dbo].[NewMarketSnaps] ([High], [Low], [Actual], [Instrument], [Volume], [UsdVolume], [OpenInterest], [Change], [BestBid],[BestBidSize],[BestAsk],[BestAskSize],[TradeTimestamp],[Timestamp]) VALUES (@High, @Low, @Actual, @Instrument, @Volume, @UsdVolume,@OpenInterest,@Change,@BestBid,@BestBidSize,@BestAsk,@BestAskSize,@TradeTimestamp,@Timestamp)";
 
-        public TickerSaveHandler2(IDbConnection connection, ILogger<TickerSaveHandler> logger)
+        public TickerSaveHandler2(IDbConnection connection, ILogger<TickerSaveHandler2> logger)
         {
             _connection = connection;
             _logger = logger;
@@ -26,6 +26,11 @@ namespace OWT.CryptoCom.ResponseHandlers
         public async Task Execute(JObject dto, CryptoComMarketClient marketClient, CancellationToken token)
         {
             var data = dto?["result"]?["data"]?.ToObject<CryptoComTickerData[]>();
+            if (data == null)
+            {
+                _logger.LogInformation("Received no data from socket");
+                return;
+            }
             foreach (var item in data)
             {
                 if (item.Actual == await _connection.QueryFirstAsync<decimal?>(SelectQuery, new{Instrument = item.Instrument}))

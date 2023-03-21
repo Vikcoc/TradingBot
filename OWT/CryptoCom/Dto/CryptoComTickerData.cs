@@ -13,8 +13,7 @@ namespace OWT.CryptoCom.Dto
         [JsonProperty("a")]
         public decimal Actual { get; set; }
 
-        [JsonProperty("i")]
-        public string Instrument { get; set; }
+        [JsonProperty("i")] public string Instrument { get; set; } = string.Empty;
 
         [JsonProperty("v")]
         public decimal Volume { get; set; }
