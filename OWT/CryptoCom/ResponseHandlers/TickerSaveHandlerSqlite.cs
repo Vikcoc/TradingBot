@@ -8,14 +8,14 @@ namespace OWT.CryptoCom.ResponseHandlers
     public class TickerSaveHandlerSqlite : ICryptoComDtoExecutor
     {
         private readonly IDbConnection _connection;
-        private readonly ILogger<TickerSaveHandler2> _logger;
+        private readonly ILogger<TickerSaveHandlerSqlite> _logger;
 
 
 
         private const string SelectQuery = "SELECT [Actual] AS Value FROM [NewMarketSnaps] WHERE [Instrument] = @Instrument ORDER BY [Timestamp] DESC LIMIT 1";
         private const string InsertQuery = "INSERT INTO [NewMarketSnaps] ([High], [Low], [Actual], [Instrument], [Volume], [UsdVolume], [OpenInterest], [Change], [BestBid],[BestBidSize],[BestAsk],[BestAskSize],[TradeTimestamp],[Timestamp]) VALUES (@High, @Low, @Actual, @Instrument, @Volume, @UsdVolume,@OpenInterest,@Change,@BestBid,@BestBidSize,@BestAsk,@BestAskSize,@TradeTimestamp,@Timestamp)";
 
-        public TickerSaveHandlerSqlite(IDbConnection connection, ILogger<TickerSaveHandler2> logger)
+        public TickerSaveHandlerSqlite(IDbConnection connection, ILogger<TickerSaveHandlerSqlite> logger)
         {
             _connection = connection;
             _logger = logger;
