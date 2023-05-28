@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.WebSockets;
+using Microsoft.Data.Sqlite;
 using OWT.CryptoCom;
 using OWT.CryptoCom.BackgroundService;
 using OWT.CryptoCom.Deciders;
@@ -10,8 +11,10 @@ using OWT.SocketClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// builder.Services.AddScoped<IDbConnection>(db =>
+//     new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IDbConnection>(db =>
-    new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+    new SqliteConnection(builder.Configuration.GetConnectionString("Sqlite")));
 builder.Services.AddTransient<CryptoComMarketClient>();
 builder.Services.AddTransient<CryptoComUserClient>();
 builder.Services.AddTransient<CryptoComCredentials>(sp =>
@@ -30,13 +33,14 @@ builder.Services.AddScoped<SecondPass>();
 builder.Services.AddScoped<TradingEthHandler11>();
 builder.Services.AddScoped<OrderLoggingHandler>();
 builder.Services.AddScoped<TickerSaveHandler2>();
+builder.Services.AddScoped<TickerSaveHandlerSqlite>();
 builder.Services.AddScoped<CryptoComPurchaseDecider>();
 builder.Services.AddScoped(s =>
 {
     var res = new CryptoComMarketDtoDecider();
     res.AddHandler(s.GetRequiredService<HeartbeatHandler>());
-    res.AddHandler(s.GetRequiredService<TickerSaveHandler>());
-    res.AddHandler(s.GetRequiredService<TickerSaveHandler2>());
+    // res.AddHandler(s.GetRequiredService<TickerSaveHandler>());
+    res.AddHandler(s.GetRequiredService<TickerSaveHandlerSqlite>());
     return res;
 });
 builder.Services.AddScoped(s =>
@@ -48,8 +52,8 @@ builder.Services.AddScoped(s =>
     res.AddHandler(s.GetRequiredService<OrderLoggingHandler>());
     return res;
 });
-//builder.Services.AddHostedService<CryptoComDataCollector>();
-builder.Services.AddHostedService<CryptoComUserCollector>();
+builder.Services.AddHostedService<CryptoComDataCollector>();
+// builder.Services.AddHostedService<CryptoComUserCollector>();
 
 var app = builder.Build();
 

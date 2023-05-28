@@ -348,11 +348,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/ClientApi/appsettings.Development.json
-/ClientApi/Properties/launchSettings.json
-/TraderProxy/Settings/connection-debug.json
-/TraderProxy/connection.json
-/NewCallback/Properties/launchSettings.json
-/NewCallback/appsettings.Development.json
+
+# Vscode
+.vscode/
+
+# Others
 /OWT/Properties/launchSettings.json
 /OWT/appsettings.Development.json
