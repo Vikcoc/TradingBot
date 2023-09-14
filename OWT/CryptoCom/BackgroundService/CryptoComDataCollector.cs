@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OWT.CryptoCom.Deciders;
 using OWT.CryptoCom.Dto;
@@ -19,6 +20,8 @@ public class CryptoComDataCollector : Microsoft.Extensions.Hosting.BackgroundSer
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await _marketClient.Connect(stoppingToken);
+        Debug.WriteLine("Connected");
+        Console.WriteLine("Connected");
         var trans = new CryptoComParamTransaction
         {
             Method = "subscribe",

@@ -12,7 +12,7 @@ namespace OWT.CryptoCom.ResponseHandlers
 
 
 
-        private const string SelectQuery = "SELECT [Actual] AS Value FROM [NewMarketSnaps] WHERE [Instrument] = @Instrument ORDER BY [Timestamp] DESC LIMIT 1";
+        private const string SelectQuery = "SELECT [Actual] AS Value FROM [NewMarketSnaps] WHERE [Instrument] = 'ETH_USDT' AND [Timestamp] = (SELECT max([Timestamp]) FROM [NewMarketSnaps])";
         private const string InsertQuery = "INSERT INTO [NewMarketSnaps] ([High], [Low], [Actual], [Instrument], [Volume], [UsdVolume], [OpenInterest], [Change], [BestBid],[BestBidSize],[BestAsk],[BestAskSize],[TradeTimestamp],[Timestamp]) VALUES (@High, @Low, @Actual, @Instrument, @Volume, @UsdVolume,@OpenInterest,@Change,@BestBid,@BestBidSize,@BestAsk,@BestAskSize,@TradeTimestamp,@Timestamp)";
 
         public TickerSaveHandlerSqlite(IDbConnection connection, ILogger<TickerSaveHandlerSqlite> logger)
@@ -55,7 +55,7 @@ namespace OWT.CryptoCom.ResponseHandlers
                     Timestamp = time
                 });
 
-                _logger.LogInformation("Inserted {0} for instrument {1} at timestamp {2}", item.Actual, item.Instrument, time);
+                // _logger.LogInformation("Inserted {0} for instrument {1} at timestamp {2}", item.Actual, item.Instrument, time);
 
             }
 
