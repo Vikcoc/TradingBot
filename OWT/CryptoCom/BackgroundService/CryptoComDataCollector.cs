@@ -37,7 +37,7 @@ public class CryptoComDataCollector : Microsoft.Extensions.Hosting.BackgroundSer
             using (var scope = _serviceProvider.CreateScope())
             {
                 var decider = scope.ServiceProvider.GetRequiredService<CryptoComMarketDtoDecider>();
-                var val = await decider.Execute(JsonConvert.DeserializeObject<JObject>(dto), _marketClient,
+                var val = decider.Execute(JsonConvert.DeserializeObject<JObject>(dto), _marketClient,
                     stoppingToken);
                 //Console.WriteLine("{0} handlers have been used", val);
             }
